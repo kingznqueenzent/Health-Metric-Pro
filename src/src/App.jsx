@@ -65,7 +65,7 @@ function PremiumDownload() {
 
       <a
         className="button"
-        href="PASTE_GOOGLE_DRIVE_LINK_HERE"
+        href="https://drive.google.com/file/d/1mZBAPvEkQHV5eIqRkRtVpgyYiHkGo_IU/view?usp=drive_link"
         target="_blank"
       >
         Open Premium Meal Plan
