@@ -451,7 +451,7 @@ h2 {
   position: absolute;
   left: 0;
   color: #0f766e;
-  content: "✓";
+  content: "\2713";
   font-weight: 900;
 }
 

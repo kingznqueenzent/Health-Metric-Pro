@@ -638,7 +638,7 @@ function PremiumDownload() {
     <AppShell>
       <section className="success-page">
         <div className="success-mark" aria-hidden="true">
-          ✓
+          OK
         </div>
         <p className="eyebrow">Payment successful</p>
         <h1>Your premium meal plan is ready</h1>
@@ -669,7 +669,7 @@ function NotFound() {
     <AppShell>
       <section className="success-page">
         <p className="eyebrow">Page not found</p>
-        <h1>Let’s get you back to your tools</h1>
+        <h1>Let's get you back to your tools</h1>
         <Link className="button primary" to="/">
           Go Home
         </Link>
