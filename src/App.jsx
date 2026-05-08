@@ -3,6 +3,7 @@ import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import {
   initialiseAnalytics,
   trackMealPlanSignup,
+  trackMealPlanSignupConversion,
   trackPageView,
   trackPremiumDownloadOpen,
   trackPremiumUpgradeClick,
@@ -56,6 +57,13 @@ const seoPages = {
     description:
       "Open your premium Health Metric Pro meal plan after a successful Stripe payment.",
     path: "/premium-meal-plan-download",
+  },
+  thankYouMealPlan: {
+    title: "Free Meal Plan Ready | Health Metric Pro",
+    description:
+      "Your free Health Metric Pro meal plan signup is complete. Continue to the free 7-day meal plan.",
+    path: "/thank-you-meal-plan",
+    noindex: true,
   },
   privacy: {
     title: "Privacy Policy | Health Metric Pro",
@@ -272,12 +280,16 @@ function buildStructuredData({ title, description, path }) {
   };
 }
 
-function Seo({ title, description, path }) {
+function Seo({ title, description, path, noindex = false }) {
   useEffect(() => {
     const canonical = getCanonicalUrl(path);
 
     document.title = title;
     upsertCanonical(canonical);
+    upsertMeta('meta[name="robots"]', {
+      name: "robots",
+      content: noindex ? "noindex, nofollow" : "index, follow",
+    });
     upsertMeta('meta[name="description"]', {
       name: "description",
       content: description,
@@ -315,7 +327,7 @@ function Seo({ title, description, path }) {
       content: description,
     });
     upsertStructuredData(buildStructuredData({ title, description, path }));
-  }, [description, path, title]);
+  }, [description, noindex, path, title]);
 
   return null;
 }
@@ -329,12 +341,22 @@ function AnalyticsTracker() {
 
   useEffect(() => {
     const seo = getSeoForPath(location.pathname);
+    const pagePath = `${location.pathname}${location.search}`;
+    const pageUrl = `${window.location.origin}${pagePath}`;
 
     trackPageView({
-      path: `${location.pathname}${location.search}`,
+      path: pagePath,
       title: seo.title,
-      url: `${window.location.origin}${location.pathname}${location.search}`,
+      url: pageUrl,
     });
+
+    if (location.pathname === seoPages.thankYouMealPlan.path) {
+      trackMealPlanSignupConversion({
+        event_label: "thank_you_meal_plan",
+        page_path: pagePath,
+        page_location: pageUrl,
+      });
+    }
   }, [location.pathname, location.search]);
 
   return null;
@@ -399,14 +421,7 @@ function QuickLinks({ includeTools = false }) {
             </Link>
           ))
         : null}
-      <Link
-        to="/7-day-meal-plan"
-        onClick={() =>
-          trackMealPlanSignup({ event_label: "quick_link_meal_plan" })
-        }
-      >
-        Free Meal Plan
-      </Link>
+      <Link to="/7-day-meal-plan">Free Meal Plan</Link>
       <Link to="/premium-meal-plan-download">Premium Download</Link>
     </section>
   );
@@ -470,13 +485,7 @@ function Home() {
             the numbers into a simple 7-day meal structure.
           </p>
           <div className="hero-actions">
-            <Link
-              className="button primary"
-              to="/7-day-meal-plan"
-              onClick={() =>
-                trackMealPlanSignup({ event_label: "hero_start_meal_plan" })
-              }
-            >
+            <Link className="button primary" to="/thank-you-meal-plan">
               Start Your Free Meal Plan
             </Link>
             <Link className="button secondary" to="/bmi-calculator">
@@ -511,13 +520,7 @@ function Home() {
             familiar UK ingredients and realistic expectations.
           </p>
         </div>
-        <Link
-          className="button primary"
-          to="/7-day-meal-plan"
-          onClick={() =>
-            trackMealPlanSignup({ event_label: "homepage_cta_meal_plan" })
-          }
-        >
+        <Link className="button primary" to="/thank-you-meal-plan">
           Start Your Free Meal Plan
         </Link>
       </section>
@@ -1076,6 +1079,35 @@ function PremiumDownload() {
   );
 }
 
+function ThankYouMealPlan() {
+  return (
+    <AppShell>
+      <Seo {...seoPages.thankYouMealPlan} />
+      <section className="success-page">
+        <div className="success-mark" aria-hidden="true">
+          OK
+        </div>
+        <p className="eyebrow">Free meal plan ready</p>
+        <h1>Your free meal plan is ready</h1>
+        <p>
+          Thanks for starting with Health Metric Pro. Continue to the free
+          7-day sample plan, then upgrade only if you want the full 30-day
+          structure.
+        </p>
+        <div className="hero-actions centered">
+          <Link className="button primary" to="/7-day-meal-plan">
+            View Free 7-Day Plan
+          </Link>
+          <Link className="button secondary" to="/bmi-calculator">
+            Try A Calculator
+          </Link>
+        </div>
+      </section>
+      <QuickLinks includeTools />
+    </AppShell>
+  );
+}
+
 function LegalPage({ seo, eyebrow, title, children }) {
   return (
     <AppShell>
@@ -1123,12 +1155,12 @@ function PrivacyPolicy() {
 
       <h2>Cookies And Analytics</h2>
       <p>
-        The site is prepared for Google Analytics 4 and Google Ads conversion
-        measurement. When configured, these tools may process page views,
-        route changes and conversion events such as meal plan starts, premium
-        upgrade clicks and premium download opens. Third party services such
-        as Stripe, Google or Vercel may also process technical data when you
-        open their services or load the website.
+        The site uses Google tag support for Google Ads conversion measurement
+        and may use Google Analytics 4 when configured. These tools may
+        process page views, route changes and conversion events such as meal
+        plan starts, premium upgrade clicks and premium download opens. Third
+        party services such as Stripe, Google or Vercel may also process
+        technical data when you open their services or load the website.
       </p>
 
       <h2>Contact</h2>
@@ -1240,6 +1272,7 @@ function NotFound() {
         title="Page Not Found | Health Metric Pro"
         description="The requested Health Metric Pro page could not be found."
         path="/404"
+        noindex
       />
       <section className="success-page">
         <p className="eyebrow">Page not found</p>
@@ -1267,6 +1300,7 @@ export default function App() {
           path="/premium-meal-plan-download"
           element={<PremiumDownload />}
         />
+        <Route path="/thank-you-meal-plan" element={<ThankYouMealPlan />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/disclaimer" element={<Disclaimer />} />

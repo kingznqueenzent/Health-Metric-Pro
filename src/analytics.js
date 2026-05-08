@@ -1,16 +1,20 @@
-const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID;
+const defaultGoogleAdsId = "AW-18126194689";
+const mealPlanSignupSendTo = "AW-18126194689/F4FaCK7eyaUcEIGQn8ND";
 
-const conversionLabels = {
-  meal_plan_signup: import.meta.env.VITE_GOOGLE_ADS_MEAL_PLAN_SIGNUP_LABEL,
-  premium_upgrade_click: import.meta.env.VITE_GOOGLE_ADS_PREMIUM_UPGRADE_LABEL,
-  premium_download_open: import.meta.env.VITE_GOOGLE_ADS_PREMIUM_DOWNLOAD_LABEL,
-};
+const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID || defaultGoogleAdsId;
+const mealPlanSignupConversionSendTo =
+  import.meta.env.VITE_GOOGLE_ADS_MEAL_PLAN_SIGNUP_SEND_TO ||
+  mealPlanSignupSendTo;
+
+const mealPlanSignupSessionKey =
+  "health_metric_pro_meal_plan_signup_conversion_sent";
 
 let isInitialised = false;
+let mealPlanSignupFallbackGuard = false;
 
 function getTagIds() {
-  return [gaMeasurementId, googleAdsId].filter(Boolean);
+  return Array.from(new Set([gaMeasurementId, googleAdsId].filter(Boolean)));
 }
 
 function ensureDataLayer() {
@@ -24,6 +28,28 @@ function ensureDataLayer() {
     };
 
   return true;
+}
+
+function hasSessionGuard(key) {
+  if (typeof window === "undefined") return true;
+
+  try {
+    return window.sessionStorage.getItem(key) === "true";
+  } catch {
+    return mealPlanSignupFallbackGuard;
+  }
+}
+
+function setSessionGuard(key) {
+  mealPlanSignupFallbackGuard = true;
+
+  if (typeof window === "undefined") return;
+
+  try {
+    window.sessionStorage.setItem(key, "true");
+  } catch {
+    // The in-memory guard still prevents duplicate conversions in this tab.
+  }
 }
 
 export function initialiseAnalytics() {
@@ -56,7 +82,7 @@ export function initialiseAnalytics() {
 export function trackPageView({ path, title, url }) {
   initialiseAnalytics();
 
-  if (!gaMeasurementId || typeof window === "undefined" || !window.gtag) return;
+  if (typeof window === "undefined" || !window.gtag) return;
 
   window.gtag("event", "page_view", {
     page_path: path,
@@ -76,36 +102,40 @@ export function trackEvent(eventName, parameters = {}) {
   });
 }
 
-export function trackConversion(eventName, parameters = {}) {
-  trackEvent(eventName, {
+export function trackMealPlanSignup(parameters = {}) {
+  trackEvent("meal_plan_signup", {
     event_category: "conversion",
     ...parameters,
   });
-
-  const label = conversionLabels[eventName];
-  if (!googleAdsId || !label || typeof window === "undefined" || !window.gtag) {
-    return;
-  }
-
-  window.gtag("event", "conversion", {
-    send_to: `${googleAdsId}/${label}`,
-    ...parameters,
-  });
 }
 
-export function trackMealPlanSignup(parameters = {}) {
-  trackConversion("meal_plan_signup", parameters);
+export function trackMealPlanSignupConversion(parameters = {}) {
+  initialiseAnalytics();
+
+  if (hasSessionGuard(mealPlanSignupSessionKey)) return false;
+
+  setSessionGuard(mealPlanSignupSessionKey);
+  trackMealPlanSignup(parameters);
+
+  if (typeof window === "undefined" || !window.gtag) return false;
+
+  window.gtag("event", "conversion", {
+    send_to: mealPlanSignupConversionSendTo,
+    ...parameters,
+  });
+
+  return true;
 }
 
 export function trackPremiumUpgradeClick(parameters = {}) {
-  trackConversion("premium_upgrade_click", {
+  trackEvent("premium_upgrade_click", {
     transport_type: "beacon",
     ...parameters,
   });
 }
 
 export function trackPremiumDownloadOpen(parameters = {}) {
-  trackConversion("premium_download_open", {
+  trackEvent("premium_download_open", {
     transport_type: "beacon",
     ...parameters,
   });

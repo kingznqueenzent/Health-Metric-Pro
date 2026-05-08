@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/thank-you-meal-plan",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
