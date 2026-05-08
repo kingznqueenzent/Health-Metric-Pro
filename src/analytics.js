@@ -1,7 +1,9 @@
+const defaultGaMeasurementId = "G-4BGXQP1DY4";
 const defaultGoogleAdsId = "AW-18126194689";
 const mealPlanSignupSendTo = "AW-18126194689/F4FaCK7eyaUcEIGQn8ND";
 
-const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const gaMeasurementId =
+  import.meta.env.VITE_GA_MEASUREMENT_ID || defaultGaMeasurementId;
 const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID || defaultGoogleAdsId;
 const mealPlanSignupConversionSendTo =
   import.meta.env.VITE_GOOGLE_ADS_MEAL_PLAN_SIGNUP_SEND_TO ||
