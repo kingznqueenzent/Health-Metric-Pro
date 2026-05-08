@@ -1,9 +1,80 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 
+const siteUrl = "https://www.healthmetricpro.co.uk";
 const stripeUrl = "https://buy.stripe.com/5kQ9AV9dng0UdQlaQ81Jm00";
 const premiumDownloadUrl =
   "https://drive.google.com/file/d/1mZBAPvEkQHV5eIqRkRtVpgyYiHkGo_IU/view?usp=drive_link";
+const contactEmail = "contact@healthmetricpro.co.uk";
+
+const seoPages = {
+  home: {
+    title: "Health Metric Pro | UK Health and Nutrition Calculators",
+    description:
+      "Use free UK-focused BMI, protein, TDEE and water intake calculators, then start a practical 7-day meal plan.",
+    path: "/",
+  },
+  bmi: {
+    title: "BMI Calculator | Health Metric Pro",
+    description:
+      "Calculate your BMI using metric UK units and see a simple adult BMI range guide.",
+    path: "/bmi-calculator",
+  },
+  protein: {
+    title: "Protein Calculator | Health Metric Pro",
+    description:
+      "Estimate your daily protein target from body weight and training goal with a simple UK nutrition calculator.",
+    path: "/protein-calculator",
+  },
+  tdee: {
+    title: "TDEE Calculator | Health Metric Pro",
+    description:
+      "Estimate your maintenance calories, BMR and goal calorie ranges from age, height, weight and activity.",
+    path: "/tdee-calculator",
+  },
+  water: {
+    title: "Water Intake Calculator | Health Metric Pro",
+    description:
+      "Estimate a practical daily hydration target in litres from weight, activity and warm conditions.",
+    path: "/water-intake-calculator",
+  },
+  mealPlan: {
+    title: "Free 7-Day Meal Plan | Health Metric Pro",
+    description:
+      "View a free UK-friendly 7-day meal plan sample and upgrade to the premium meal plan when ready.",
+    path: "/7-day-meal-plan",
+  },
+  premiumDownload: {
+    title: "Premium Meal Plan Download | Health Metric Pro",
+    description:
+      "Open your premium Health Metric Pro meal plan after a successful Stripe payment.",
+    path: "/premium-meal-plan-download",
+  },
+  privacy: {
+    title: "Privacy Policy | Health Metric Pro",
+    description:
+      "Read how Health Metric Pro handles privacy, payment processing, contact data and third-party services.",
+    path: "/privacy-policy",
+  },
+  terms: {
+    title: "Terms | Health Metric Pro",
+    description:
+      "Read the terms for using Health Metric Pro calculators, meal plans, Stripe payments and premium downloads.",
+    path: "/terms",
+  },
+  disclaimer: {
+    title: "Disclaimer | Health Metric Pro",
+    description:
+      "Read the health, nutrition and calculator disclaimer for Health Metric Pro.",
+    path: "/disclaimer",
+  },
+  contact: {
+    title: "Contact | Health Metric Pro",
+    description:
+      "Contact Health Metric Pro about meal plans, premium access or website support.",
+    path: "/contact",
+  },
+};
 
 const tools = [
   {
@@ -80,6 +151,80 @@ const mealPlan = [
   },
 ];
 
+function getCanonicalUrl(path) {
+  return `${siteUrl}${path === "/" ? "/" : path}`;
+}
+
+function upsertMeta(selector, attributes) {
+  let element = document.head.querySelector(selector);
+  if (!element) {
+    element = document.createElement("meta");
+    document.head.appendChild(element);
+  }
+
+  Object.entries(attributes).forEach(([key, value]) => {
+    element.setAttribute(key, value);
+  });
+}
+
+function upsertCanonical(href) {
+  let link = document.head.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", "canonical");
+    document.head.appendChild(link);
+  }
+
+  link.setAttribute("href", href);
+}
+
+function Seo({ title, description, path }) {
+  useEffect(() => {
+    const canonical = getCanonicalUrl(path);
+
+    document.title = title;
+    upsertCanonical(canonical);
+    upsertMeta('meta[name="description"]', {
+      name: "description",
+      content: description,
+    });
+    upsertMeta('meta[property="og:title"]', {
+      property: "og:title",
+      content: title,
+    });
+    upsertMeta('meta[property="og:description"]', {
+      property: "og:description",
+      content: description,
+    });
+    upsertMeta('meta[property="og:type"]', {
+      property: "og:type",
+      content: "website",
+    });
+    upsertMeta('meta[property="og:url"]', {
+      property: "og:url",
+      content: canonical,
+    });
+    upsertMeta('meta[property="og:site_name"]', {
+      property: "og:site_name",
+      content: "Health Metric Pro",
+    });
+    upsertMeta('meta[name="twitter:card"]', {
+      name: "twitter:card",
+      content: "summary_large_image",
+    });
+    upsertMeta('meta[name="twitter:title"]', {
+      name: "twitter:title",
+      content: title,
+    });
+    upsertMeta('meta[name="twitter:description"]', {
+      name: "twitter:description",
+      content: description,
+    });
+  }, [description, path, title]);
+
+  return null;
+}
+
 function clampNumber(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
@@ -107,6 +252,7 @@ function AppShell({ children }) {
           <NavLink to="/bmi-calculator">BMI</NavLink>
           <NavLink to="/protein-calculator">Protein</NavLink>
           <NavLink to="/tdee-calculator">TDEE</NavLink>
+          <NavLink to="/water-intake-calculator">Water</NavLink>
           <NavLink to="/7-day-meal-plan">Meal Plan</NavLink>
         </nav>
       </header>
@@ -116,15 +262,38 @@ function AppShell({ children }) {
           <strong>Health Metric Pro</strong>
           <span>Built for practical UK nutrition planning.</span>
         </div>
-        <Link to="/premium-meal-plan-download">Premium download</Link>
+        <nav className="footer-links" aria-label="Footer navigation">
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <Link to="/terms">Terms</Link>
+          <Link to="/disclaimer">Disclaimer</Link>
+          <Link to="/contact">Contact</Link>
+        </nav>
       </footer>
     </>
+  );
+}
+
+function QuickLinks({ includeTools = false }) {
+  return (
+    <section className="quick-links" aria-label="Related pages">
+      <Link to="/">Home</Link>
+      {includeTools
+        ? tools.map((tool) => (
+            <Link key={tool.path} to={tool.path}>
+              {tool.title}
+            </Link>
+          ))
+        : null}
+      <Link to="/7-day-meal-plan">Free Meal Plan</Link>
+      <Link to="/premium-meal-plan-download">Premium Download</Link>
+    </section>
   );
 }
 
 function Home() {
   return (
     <AppShell>
+      <Seo {...seoPages.home} />
       <section className="hero">
         <div className="hero-content">
           <p className="eyebrow">UK-focused health and nutrition tools</p>
@@ -176,9 +345,10 @@ function Home() {
   );
 }
 
-function CalculatorLayout({ eyebrow, title, intro, children, aside }) {
+function CalculatorLayout({ eyebrow, title, intro, children, aside, seo }) {
   return (
     <AppShell>
+      {seo ? <Seo {...seo} /> : null}
       <section className="page-hero compact">
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
@@ -188,6 +358,7 @@ function CalculatorLayout({ eyebrow, title, intro, children, aside }) {
         <div className="calculator-panel">{children}</div>
         <aside className="insight-panel">{aside}</aside>
       </section>
+      <QuickLinks />
     </AppShell>
   );
 }
@@ -243,6 +414,7 @@ function BmiCalculator() {
 
   return (
     <CalculatorLayout
+      seo={seoPages.bmi}
       eyebrow="Metric calculator"
       title="BMI Calculator"
       intro="Use centimetres and kilograms to estimate adult body mass index."
@@ -323,6 +495,7 @@ function ProteinCalculator() {
 
   return (
     <CalculatorLayout
+      seo={seoPages.protein}
       eyebrow="Nutrition target"
       title="Protein Calculator"
       intro="Estimate a daily protein target based on body weight and training goal."
@@ -396,6 +569,7 @@ function TdeeCalculator() {
 
   return (
     <CalculatorLayout
+      seo={seoPages.tdee}
       eyebrow="Energy estimate"
       title="TDEE Calculator"
       intro="Estimate maintenance calories using body stats and weekly activity."
@@ -506,6 +680,7 @@ function WaterCalculator() {
 
   return (
     <CalculatorLayout
+      seo={seoPages.water}
       eyebrow="Hydration planner"
       title="Water Intake Calculator"
       intro="Estimate a daily fluid target using weight, activity, and warmer conditions."
@@ -578,6 +753,7 @@ function WaterCalculator() {
 function MealPlan() {
   return (
     <AppShell>
+      <Seo {...seoPages.mealPlan} />
       <section className="page-hero">
         <p className="eyebrow">Free nutrition plan</p>
         <h1>7-Day Meal Plan</h1>
@@ -629,6 +805,7 @@ function MealPlan() {
           Buy Premium Plan
         </a>
       </section>
+      <QuickLinks includeTools />
     </AppShell>
   );
 }
@@ -636,6 +813,7 @@ function MealPlan() {
 function PremiumDownload() {
   return (
     <AppShell>
+      <Seo {...seoPages.premiumDownload} />
       <section className="success-page">
         <div className="success-mark" aria-hidden="true">
           OK
@@ -660,13 +838,173 @@ function PremiumDownload() {
           </Link>
         </div>
       </section>
+      <QuickLinks includeTools />
     </AppShell>
+  );
+}
+
+function LegalPage({ seo, eyebrow, title, children }) {
+  return (
+    <AppShell>
+      <Seo {...seo} />
+      <section className="legal-page">
+        <p className="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p className="small-note">Last updated: 8 May 2026</p>
+        <div className="legal-content">{children}</div>
+      </section>
+      <QuickLinks includeTools />
+    </AppShell>
+  );
+}
+
+function PrivacyPolicy() {
+  return (
+    <LegalPage
+      seo={seoPages.privacy}
+      eyebrow="Privacy"
+      title="Privacy Policy"
+    >
+      <h2>Overview</h2>
+      <p>
+        Health Metric Pro provides health calculators, meal plan information
+        and links to third-party payment and document services. This website
+        does not currently use user accounts, a custom backend, file uploads or
+        hidden payment verification logic.
+      </p>
+
+      <h2>Information You Provide</h2>
+      <p>
+        Calculator values are processed in your browser and are not submitted
+        to Health Metric Pro. If you contact us by email, we use your message
+        and email address to respond to your request.
+      </p>
+
+      <h2>Payments And Premium Access</h2>
+      <p>
+        Premium purchases are handled by Stripe through a Stripe Payment Link.
+        Stripe may collect payment, billing and fraud-prevention information
+        under its own privacy terms. Premium delivery is provided through a
+        Google Docs or Google Drive link.
+      </p>
+
+      <h2>Cookies And Analytics</h2>
+      <p>
+        This version of the site does not add custom tracking scripts. Third
+        party services such as Stripe, Google or Vercel may process technical
+        data when you open their services or load the website.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        For privacy questions, contact{" "}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+      </p>
+    </LegalPage>
+  );
+}
+
+function Terms() {
+  return (
+    <LegalPage seo={seoPages.terms} eyebrow="Terms" title="Terms">
+      <h2>Using The Website</h2>
+      <p>
+        Health Metric Pro is provided for general information, planning and
+        educational use. You are responsible for how you use the calculators,
+        meal ideas and download links.
+      </p>
+
+      <h2>Calculators And Meal Plans</h2>
+      <p>
+        Calculator outputs are estimates and may not reflect your personal
+        medical, fitness or nutrition needs. Meal plan examples are general and
+        should be adjusted for allergies, preferences, medication, pregnancy,
+        medical conditions and professional advice.
+      </p>
+
+      <h2>Payments</h2>
+      <p>
+        Premium meal plan purchases use a plain Stripe Payment Link. Health
+        Metric Pro does not run popup checkout, custom card handling or custom
+        checkout logic on this website.
+      </p>
+
+      <h2>Premium Delivery</h2>
+      <p>
+        The premium download page opens the current Google Docs delivery link.
+        Access may depend on the document sharing settings and availability of
+        Google services.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        For support, contact{" "}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+      </p>
+    </LegalPage>
+  );
+}
+
+function Disclaimer() {
+  return (
+    <LegalPage
+      seo={seoPages.disclaimer}
+      eyebrow="Health disclaimer"
+      title="Disclaimer"
+    >
+      <h2>No Medical Advice</h2>
+      <p>
+        Health Metric Pro does not provide medical advice, diagnosis or
+        treatment. The website is not a replacement for a GP, registered
+        dietitian, nutrition professional or other qualified clinician.
+      </p>
+
+      <h2>Estimated Results</h2>
+      <p>
+        BMI, protein, TDEE and water intake results are estimates. They can be
+        affected by age, pregnancy, medication, health conditions, body
+        composition, activity patterns and measurement accuracy.
+      </p>
+
+      <h2>When To Seek Support</h2>
+      <p>
+        Speak with a qualified professional before changing diet, activity or
+        supplement habits if you have a medical condition, are pregnant or
+        breastfeeding, have a history of disordered eating, or have concerns
+        about weight, hydration or nutrition.
+      </p>
+    </LegalPage>
+  );
+}
+
+function Contact() {
+  return (
+    <LegalPage seo={seoPages.contact} eyebrow="Contact" title="Contact">
+      <h2>Website Support</h2>
+      <p>
+        For questions about Health Metric Pro, premium meal plan access or site
+        support, email{" "}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+      </p>
+
+      <h2>Payments</h2>
+      <p>
+        Payments are processed through Stripe. If you have a payment issue,
+        include the email address used at checkout and the approximate purchase
+        time so the request can be matched to the Stripe receipt.
+      </p>
+    </LegalPage>
   );
 }
 
 function NotFound() {
   return (
     <AppShell>
+      <Seo
+        title="Page Not Found | Health Metric Pro"
+        description="The requested Health Metric Pro page could not be found."
+        path="/404"
+      />
       <section className="success-page">
         <p className="eyebrow">Page not found</p>
         <h1>Let's get you back to your tools</h1>
@@ -691,6 +1029,10 @@ export default function App() {
         path="/premium-meal-plan-download"
         element={<PremiumDownload />}
       />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/disclaimer" element={<Disclaimer />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
