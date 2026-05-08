@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, NavLink, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import {
+  initialiseAnalytics,
+  trackMealPlanSignup,
+  trackPageView,
+  trackPremiumDownloadOpen,
+  trackPremiumUpgradeClick,
+} from "./analytics.js";
 
 const siteUrl = "https://www.healthmetricpro.co.uk";
 const stripeUrl = "https://buy.stripe.com/5kQ9AV9dng0UdQlaQ81Jm00";
@@ -155,6 +162,17 @@ function getCanonicalUrl(path) {
   return `${siteUrl}${path === "/" ? "/" : path}`;
 }
 
+function getSeoForPath(path) {
+  return (
+    Object.values(seoPages).find((page) => page.path === path) || {
+      title: "Health Metric Pro",
+      description:
+        "Free UK-focused health calculators and meal plan tools from Health Metric Pro.",
+      path,
+    }
+  );
+}
+
 function upsertMeta(selector, attributes) {
   let element = document.head.querySelector(selector);
   if (!element) {
@@ -176,6 +194,82 @@ function upsertCanonical(href) {
   }
 
   link.setAttribute("href", href);
+}
+
+function upsertStructuredData(data) {
+  let script = document.head.querySelector("#structured-data");
+  if (!script) {
+    script = document.createElement("script");
+    script.id = "structured-data";
+    script.type = "application/ld+json";
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(data);
+}
+
+function buildStructuredData({ title, description, path }) {
+  const canonical = getCanonicalUrl(path);
+  const graph = [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { "@id": `${siteUrl}/#website` },
+    },
+  ];
+
+  if (path === "/") {
+    graph.push(
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: `${siteUrl}/`,
+        name: "Health Metric Pro",
+        description,
+        publisher: { "@id": `${siteUrl}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: "Health Metric Pro",
+        url: `${siteUrl}/`,
+      },
+    );
+  }
+
+  if (tools.some((tool) => tool.path === path)) {
+    graph.push({
+      "@type": "WebApplication",
+      name: title,
+      description,
+      url: canonical,
+      applicationCategory: "HealthApplication",
+      operatingSystem: "Any",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "GBP",
+      },
+    });
+  }
+
+  if (path === "/7-day-meal-plan") {
+    graph.push({
+      "@type": "CreativeWork",
+      name: "Free 7-Day Meal Plan",
+      description,
+      url: canonical,
+      inLanguage: "en-GB",
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": graph,
+  };
 }
 
 function Seo({ title, description, path }) {
@@ -220,7 +314,28 @@ function Seo({ title, description, path }) {
       name: "twitter:description",
       content: description,
     });
+    upsertStructuredData(buildStructuredData({ title, description, path }));
   }, [description, path, title]);
+
+  return null;
+}
+
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    initialiseAnalytics();
+  }, []);
+
+  useEffect(() => {
+    const seo = getSeoForPath(location.pathname);
+
+    trackPageView({
+      path: `${location.pathname}${location.search}`,
+      title: seo.title,
+      url: `${window.location.origin}${location.pathname}${location.search}`,
+    });
+  }, [location.pathname, location.search]);
 
   return null;
 }
@@ -284,8 +399,60 @@ function QuickLinks({ includeTools = false }) {
             </Link>
           ))
         : null}
-      <Link to="/7-day-meal-plan">Free Meal Plan</Link>
+      <Link
+        to="/7-day-meal-plan"
+        onClick={() =>
+          trackMealPlanSignup({ event_label: "quick_link_meal_plan" })
+        }
+      >
+        Free Meal Plan
+      </Link>
       <Link to="/premium-meal-plan-download">Premium Download</Link>
+    </section>
+  );
+}
+
+function EmailCapture({
+  title = "Get meal plan updates",
+  description = "Email capture is ready for a future email service connection.",
+}) {
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    trackMealPlanSignup({ event_label: "email_capture_prepared" });
+    setIsSubmitted(true);
+  }
+
+  return (
+    <section className="email-capture" aria-label="Meal plan email updates">
+      <div>
+        <p className="eyebrow">Meal plan updates</p>
+        <h2>{title}</h2>
+        <p>{description}</p>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <span>Email address</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="you@example.com"
+            required
+          />
+        </label>
+        <button className="button primary" type="submit">
+          Register Interest
+        </button>
+        {isSubmitted ? (
+          <p className="small-note">
+            Interest noted for this session. Email delivery will be connected
+            when the mailing service is added.
+          </p>
+        ) : null}
+      </form>
     </section>
   );
 }
@@ -303,8 +470,14 @@ function Home() {
             the numbers into a simple 7-day meal structure.
           </p>
           <div className="hero-actions">
-            <Link className="button primary" to="/7-day-meal-plan">
-              Get Free Meal Plan
+            <Link
+              className="button primary"
+              to="/7-day-meal-plan"
+              onClick={() =>
+                trackMealPlanSignup({ event_label: "hero_start_meal_plan" })
+              }
+            >
+              Start Your Free Meal Plan
             </Link>
             <Link className="button secondary" to="/bmi-calculator">
               Start With BMI
@@ -330,16 +503,54 @@ function Home() {
 
       <section className="cta-band">
         <div>
-          <p className="eyebrow">Free 7-day plan</p>
-          <h2>Simple meals with familiar UK ingredients</h2>
+          <p className="eyebrow">Start your free meal plan</p>
+          <h2>Turn your calculator results into a practical next step</h2>
           <p>
             Start with balanced breakfasts, portable lunches, and protein-led
-            dinners before upgrading to the full premium plan.
+            dinners before upgrading to the full premium plan. Built around
+            familiar UK ingredients and realistic expectations.
           </p>
         </div>
-        <Link className="button primary" to="/7-day-meal-plan">
-          View Meal Plan
+        <Link
+          className="button primary"
+          to="/7-day-meal-plan"
+          onClick={() =>
+            trackMealPlanSignup({ event_label: "homepage_cta_meal_plan" })
+          }
+        >
+          Start Your Free Meal Plan
         </Link>
+      </section>
+
+      <section className="conversion-grid">
+        <article>
+          <p className="eyebrow">Premium teaser</p>
+          <h2>Upgrade when you want structure beyond the sample week</h2>
+          <p>
+            The premium plan is designed for people who want a clearer 30-day
+            rhythm, grocery lists, nutrition guidance, and instant digital
+            access after secure Stripe checkout.
+          </p>
+          <a
+            className="button primary"
+            href={stripeUrl}
+            onClick={() =>
+              trackPremiumUpgradeClick({ event_label: "homepage_teaser" })
+            }
+          >
+            View Premium Plan
+          </a>
+        </article>
+        <article>
+          <p className="eyebrow">Trust signals</p>
+          <h2>Built for realistic UK nutrition planning</h2>
+          <ul className="trust-list">
+            <li>UK-focused calculators and meal wording</li>
+            <li>Secure checkout through Stripe</li>
+            <li>Instant digital access to the premium document</li>
+            <li>General guidance, not a medical diagnosis</li>
+          </ul>
+        </article>
       </section>
     </AppShell>
   );
@@ -761,7 +972,13 @@ function MealPlan() {
           A practical sample week built around balanced meals, protein at each
           sitting, and supermarket-friendly UK ingredients.
         </p>
-        <a className="button primary" href={stripeUrl}>
+        <a
+          className="button primary"
+          href={stripeUrl}
+          onClick={() =>
+            trackPremiumUpgradeClick({ event_label: "meal_plan_hero" })
+          }
+        >
           Upgrade to Premium
         </a>
       </section>
@@ -795,13 +1012,26 @@ function MealPlan() {
       <section className="premium-band">
         <div>
           <p className="eyebrow">Premium upgrade</p>
-          <h2>Unlock the full premium meal plan</h2>
+          <h2>Unlock the 30-Day Structured Meal Plan</h2>
           <p>
-            Get the structured download with more meal variety, shopping
-            guidance, and a clearer weekly rhythm.
+            Get a mobile-friendly digital plan with grocery lists, simple
+            nutrition guidance, and instant access after secure Stripe
+            checkout.
           </p>
+          <ul className="premium-list">
+            <li>30-day structured meal rhythm</li>
+            <li>Grocery lists for easier planning</li>
+            <li>Nutrition guidance for realistic consistency</li>
+            <li>Instant digital access after purchase</li>
+          </ul>
         </div>
-        <a className="button primary" href={stripeUrl}>
+        <a
+          className="button primary"
+          href={stripeUrl}
+          onClick={() =>
+            trackPremiumUpgradeClick({ event_label: "meal_plan_premium_band" })
+          }
+        >
           Buy Premium Plan
         </a>
       </section>
@@ -830,6 +1060,9 @@ function PremiumDownload() {
             href={premiumDownloadUrl}
             target="_blank"
             rel="noreferrer"
+            onClick={() =>
+              trackPremiumDownloadOpen({ event_label: "premium_download_page" })
+            }
           >
             Open Premium Meal Plan
           </a>
@@ -890,9 +1123,12 @@ function PrivacyPolicy() {
 
       <h2>Cookies And Analytics</h2>
       <p>
-        This version of the site does not add custom tracking scripts. Third
-        party services such as Stripe, Google or Vercel may process technical
-        data when you open their services or load the website.
+        The site is prepared for Google Analytics 4 and Google Ads conversion
+        measurement. When configured, these tools may process page views,
+        route changes and conversion events such as meal plan starts, premium
+        upgrade clicks and premium download opens. Third party services such
+        as Stripe, Google or Vercel may also process technical data when you
+        open their services or load the website.
       </p>
 
       <h2>Contact</h2>
@@ -1018,22 +1254,25 @@ function NotFound() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/bmi-calculator" element={<BmiCalculator />} />
-      <Route path="/protein-calculator" element={<ProteinCalculator />} />
-      <Route path="/tdee-calculator" element={<TdeeCalculator />} />
-      <Route path="/water-intake-calculator" element={<WaterCalculator />} />
-      <Route path="/7-day-meal-plan" element={<MealPlan />} />
-      <Route
-        path="/premium-meal-plan-download"
-        element={<PremiumDownload />}
-      />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<Terms />} />
-      <Route path="/disclaimer" element={<Disclaimer />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <AnalyticsTracker />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/bmi-calculator" element={<BmiCalculator />} />
+        <Route path="/protein-calculator" element={<ProteinCalculator />} />
+        <Route path="/tdee-calculator" element={<TdeeCalculator />} />
+        <Route path="/water-intake-calculator" element={<WaterCalculator />} />
+        <Route path="/7-day-meal-plan" element={<MealPlan />} />
+        <Route
+          path="/premium-meal-plan-download"
+          element={<PremiumDownload />}
+        />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
