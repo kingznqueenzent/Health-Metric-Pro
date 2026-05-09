@@ -1,7 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import {
+  getPremiumTrackingSnapshot,
   initialiseAnalytics,
+  markPremiumRedirect,
+  subscribeToPremiumTrackingUpdates,
   trackMealPlanSignup,
   trackMealPlanSignupConversion,
   trackPageView,
@@ -468,6 +471,50 @@ function EmailCapture({
           </p>
         ) : null}
       </form>
+    </section>
+  );
+}
+
+function formatDebugTimestamp(value) {
+  if (!value) return "Not recorded";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  }).format(date);
+}
+
+function PremiumDebugPanel() {
+  const [snapshot, setSnapshot] = useState(() =>
+    getPremiumTrackingSnapshot(),
+  );
+
+  useEffect(() => {
+    setSnapshot(getPremiumTrackingSnapshot());
+    return subscribeToPremiumTrackingUpdates(setSnapshot);
+  }, []);
+
+  return (
+    <section className="debug-panel" aria-label="Premium tracking debug">
+      <p className="eyebrow">Development debug</p>
+      <h2>Premium tracking markers</h2>
+      <dl>
+        <div>
+          <dt>Last premium click timestamp</dt>
+          <dd>{formatDebugTimestamp(snapshot.lastPremiumClickAt)}</dd>
+        </div>
+        <div>
+          <dt>Last premium redirect timestamp</dt>
+          <dd>{formatDebugTimestamp(snapshot.lastPremiumRedirectAt)}</dd>
+        </div>
+        <div>
+          <dt>Last premium download click</dt>
+          <dd>{formatDebugTimestamp(snapshot.lastPremiumDownloadClickAt)}</dd>
+        </div>
+      </dl>
     </section>
   );
 }
@@ -1044,6 +1091,15 @@ function MealPlan() {
 }
 
 function PremiumDownload() {
+  const hasMarkedRedirect = useRef(false);
+
+  useEffect(() => {
+    if (hasMarkedRedirect.current) return;
+
+    hasMarkedRedirect.current = true;
+    markPremiumRedirect({ event_label: "premium_download_page" });
+  }, []);
+
   return (
     <AppShell>
       <Seo {...seoPages.premiumDownload} />
@@ -1053,6 +1109,7 @@ function PremiumDownload() {
         </div>
         <p className="eyebrow">Payment successful</p>
         <h1>Your premium meal plan is ready</h1>
+        <p>Your payment redirect completed successfully.</p>
         <p>
           Open the premium plan below and keep it available for meal prep,
           shopping, and weekly planning.
@@ -1074,6 +1131,7 @@ function PremiumDownload() {
           </Link>
         </div>
       </section>
+      {import.meta.env.DEV ? <PremiumDebugPanel /> : null}
       <QuickLinks includeTools />
     </AppShell>
   );
