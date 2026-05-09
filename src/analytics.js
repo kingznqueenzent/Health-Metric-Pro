@@ -11,6 +11,15 @@ const mealPlanSignupConversionSendTo =
 
 const mealPlanSignupSessionKey =
   "health_metric_pro_meal_plan_signup_conversion_sent";
+const premiumTrackingUpdatedEvent =
+  "health_metric_pro_premium_tracking_updated";
+
+const premiumTrackingKeys = {
+  lastPremiumClickAt: "health_metric_pro_last_premium_click_at",
+  lastPremiumRedirectAt: "health_metric_pro_last_premium_redirect_at",
+  lastPremiumDownloadClickAt:
+    "health_metric_pro_last_premium_download_click_at",
+};
 
 let isInitialised = false;
 let mealPlanSignupFallbackGuard = false;
@@ -54,6 +63,118 @@ function setSessionGuard(key) {
   }
 }
 
+function logDevelopmentEvent(eventName, parameters = {}) {
+  if (!import.meta.env.DEV) return;
+
+  console.info("[Health Metric Pro tracking]", eventName, parameters);
+}
+
+function getBrowserStorage(storageName) {
+  if (typeof window === "undefined") return null;
+
+  try {
+    return window[storageName];
+  } catch {
+    return null;
+  }
+}
+
+function writeStorageValue(storage, key, value) {
+  if (!storage) return;
+
+  try {
+    storage.setItem(key, value);
+  } catch {
+    // Tracking markers are helpful, but the payment flow should never depend on them.
+  }
+}
+
+function readStorageValue(storage, key) {
+  if (!storage) return "";
+
+  try {
+    return storage.getItem(key) || "";
+  } catch {
+    return "";
+  }
+}
+
+function writePremiumMarker(key, parameters = {}) {
+  if (typeof window === "undefined") return "";
+
+  const timestamp = new Date().toISOString();
+  const localStorage = getBrowserStorage("localStorage");
+  const sessionStorage = getBrowserStorage("sessionStorage");
+
+  writeStorageValue(localStorage, key, timestamp);
+  writeStorageValue(sessionStorage, key, timestamp);
+
+  window.dispatchEvent(
+    new CustomEvent(premiumTrackingUpdatedEvent, {
+      detail: { key, timestamp, parameters },
+    }),
+  );
+
+  return timestamp;
+}
+
+export function getPremiumTrackingSnapshot() {
+  if (typeof window === "undefined") {
+    return {
+      lastPremiumClickAt: "",
+      lastPremiumRedirectAt: "",
+      lastPremiumDownloadClickAt: "",
+    };
+  }
+
+  const localStorage = getBrowserStorage("localStorage");
+  const sessionStorage = getBrowserStorage("sessionStorage");
+
+  return {
+    lastPremiumClickAt:
+      readStorageValue(
+        localStorage,
+        premiumTrackingKeys.lastPremiumClickAt,
+      ) ||
+      readStorageValue(
+        sessionStorage,
+        premiumTrackingKeys.lastPremiumClickAt,
+      ),
+    lastPremiumRedirectAt:
+      readStorageValue(
+        localStorage,
+        premiumTrackingKeys.lastPremiumRedirectAt,
+      ) ||
+      readStorageValue(
+        sessionStorage,
+        premiumTrackingKeys.lastPremiumRedirectAt,
+      ),
+    lastPremiumDownloadClickAt:
+      readStorageValue(
+        localStorage,
+        premiumTrackingKeys.lastPremiumDownloadClickAt,
+      ) ||
+      readStorageValue(
+        sessionStorage,
+        premiumTrackingKeys.lastPremiumDownloadClickAt,
+      ),
+  };
+}
+
+export function subscribeToPremiumTrackingUpdates(callback) {
+  if (typeof window === "undefined") return () => {};
+
+  function handleUpdate() {
+    callback(getPremiumTrackingSnapshot());
+  }
+
+  window.addEventListener(premiumTrackingUpdatedEvent, handleUpdate);
+
+  return () => {
+    window.removeEventListener(premiumTrackingUpdatedEvent, handleUpdate);
+  };
+}
+
 export function initialiseAnalytics() {
   if (!ensureDataLayer() || isInitialised) return;
 
@@ -95,6 +216,7 @@ export function trackPageView({ path, title, url }) {
 
 export function trackEvent(eventName, parameters = {}) {
   initialiseAnalytics();
+  logDevelopmentEvent(eventName, parameters);
 
   if (typeof window === "undefined" || !window.gtag) return;
 
@@ -129,15 +251,41 @@ export function trackMealPlanSignupConversion(parameters = {}) {
   return true;
 }
 
+export function markPremiumRedirect(parameters = {}) {
+  const timestamp = writePremiumMarker(
+    premiumTrackingKeys.lastPremiumRedirectAt,
+    parameters,
+  );
+
+  logDevelopmentEvent("premium_redirect_completed", {
+    event_timestamp: timestamp,
+    ...parameters,
+  });
+
+  return timestamp;
+}
+
 export function trackPremiumUpgradeClick(parameters = {}) {
+  const timestamp = writePremiumMarker(
+    premiumTrackingKeys.lastPremiumClickAt,
+    parameters,
+  );
+
   trackEvent("premium_upgrade_click", {
+    event_timestamp: timestamp,
     transport_type: "beacon",
     ...parameters,
   });
 }
 
 export function trackPremiumDownloadOpen(parameters = {}) {
+  const timestamp = writePremiumMarker(
+    premiumTrackingKeys.lastPremiumDownloadClickAt,
+    parameters,
+  );
+
   trackEvent("premium_download_open", {
+    event_timestamp: timestamp,
     transport_type: "beacon",
     ...parameters,
   });
