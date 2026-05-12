@@ -380,6 +380,11 @@
       }
 
       @media print {
+        @page {
+          size: A4;
+          margin: 14mm;
+        }
+
         body {
           background: #ffffff;
         }
@@ -394,6 +399,16 @@
         .cover,
         .section {
           break-after: auto;
+        }
+
+        .cover {
+          min-height: calc(297mm - 28mm);
+          padding: 0;
+        }
+
+        .section {
+          padding: 0 0 14mm;
+          border-top: 0;
         }
 
         .section,
