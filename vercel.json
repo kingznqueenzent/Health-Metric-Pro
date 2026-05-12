@@ -8,6 +8,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/health-metric-pro-30-day-premium-meal-plan.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "rewrites": [

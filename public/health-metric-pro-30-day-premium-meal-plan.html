@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Health Metric Pro - 30-Day Premium Meal Plan UK Edition</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #123231;
+        --muted: #5d706f;
+        --line: #d9e8e4;
+        --paper: #ffffff;
+        --soft: #f3faf7;
+        --mint: #dff3ec;
+        --green: #0f766e;
+        --blue: #1d4ed8;
+        --teal: #0b5563;
+        --gold: #c58a17;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #eef7f4;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--blue);
+      }
+
+      .document {
+        width: min(1080px, calc(100% - 24px));
+        margin: 24px auto;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        box-shadow: 0 24px 80px rgba(18, 50, 49, 0.12);
+      }
+
+      .cover {
+        display: grid;
+        min-height: 680px;
+        align-content: center;
+        gap: 28px;
+        padding: clamp(36px, 8vw, 96px);
+        background:
+          linear-gradient(135deg, rgba(15, 118, 110, 0.94), rgba(29, 78, 216, 0.88)),
+          linear-gradient(45deg, rgba(255, 255, 255, 0.14) 25%, transparent 25% 50%, rgba(255, 255, 255, 0.14) 50% 75%, transparent 75%);
+        background-size: auto, 48px 48px;
+        color: #ffffff;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-weight: 900;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 54px;
+        height: 54px;
+        place-items: center;
+        border: 2px solid rgba(255, 255, 255, 0.72);
+        border-radius: 10px;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 2px;
+        color: rgba(255, 255, 255, 0.76);
+        font-weight: 700;
+      }
+
+      .cover h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(2.8rem, 8vw, 6.2rem);
+        line-height: 0.96;
+      }
+
+      .cover .subtitle {
+        max-width: 720px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: clamp(1.1rem, 2.4vw, 1.55rem);
+        font-weight: 750;
+      }
+
+      .cover-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .cover-badges span {
+        padding: 0.58rem 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        font-size: 0.92rem;
+        font-weight: 800;
+      }
+
+      .section {
+        padding: clamp(30px, 6vw, 64px);
+        border-top: 1px solid var(--line);
+      }
+
+      .section:first-of-type {
+        border-top: 0;
+      }
+
+      .section-header {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--green);
+        font-size: 0.76rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h2,
+      h3 {
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.12;
+      }
+
+      h2 {
+        font-size: clamp(1.8rem, 4vw, 2.7rem);
+      }
+
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .lead {
+        max-width: 820px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--soft);
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--teal);
+      }
+
+      .note {
+        padding: 18px;
+        border-left: 5px solid var(--green);
+        background: var(--soft);
+        color: var(--muted);
+      }
+
+      .meal-week {
+        margin-top: 32px;
+      }
+
+      .week-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--mint);
+      }
+
+      .week-title p {
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow-wrap: anywhere;
+      }
+
+      th,
+      td {
+        padding: 13px 12px;
+        border: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #e8f4f0;
+        color: var(--teal);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      td:first-child {
+        width: 86px;
+        color: var(--green);
+        font-weight: 900;
+      }
+
+      .shopping-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .shopping-list {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      ul,
+      ol {
+        margin: 10px 0 0;
+        padding-left: 1.2rem;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      .prep-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .prep-step {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .prep-step span {
+        display: grid;
+        height: 42px;
+        place-items: center;
+        border-radius: 8px;
+        background: var(--green);
+        color: #ffffff;
+        font-weight: 900;
+      }
+
+      .swap-table td:first-child {
+        width: auto;
+        color: var(--ink);
+      }
+
+      .footer-note {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 22px clamp(30px, 6vw, 64px);
+        border-top: 1px solid var(--line);
+        background: #f8fcfb;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 820px) {
+        .document {
+          width: 100%;
+          margin: 0;
+          border-inline: 0;
+          box-shadow: none;
+        }
+
+        .cover {
+          min-height: 560px;
+        }
+
+        .grid,
+        .shopping-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .week-title {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        tr + tr {
+          margin-top: 12px;
+        }
+
+        td {
+          border: 0;
+          border-top: 1px solid var(--line);
+        }
+
+        td:first-child {
+          width: auto;
+          border-top: 0;
+          background: #e8f4f0;
+        }
+
+        td::before {
+          display: block;
+          margin-bottom: 4px;
+          color: var(--teal);
+          font-size: 0.72rem;
+          font-weight: 900;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          content: attr(data-label);
+        }
+
+        td:first-child::before {
+          content: "";
+          display: none;
+        }
+
+        .footer-note {
+          align-items: start;
+          flex-direction: column;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        .document {
+          width: 100%;
+          margin: 0;
+          border: 0;
+          box-shadow: none;
+        }
+
+        .cover,
+        .section {
+          break-after: auto;
+        }
+
+        .section,
+        .card,
+        .shopping-list,
+        .prep-step,
+        tr {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        .meal-week,
+        .shopping-list {
+          break-inside: avoid;
+        }
+
+        .meal-week + .meal-week {
+          break-before: page;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="document">
+      <header class="cover">
+        <div class="brand">
+          <span class="brand-mark">HMP</span>
+          <span>
+            Health Metric Pro
+            <small>Premium nutrition planning</small>
+          </span>
+        </div>
+        <div>
+          <p class="eyebrow" style="color: rgba(255, 255, 255, 0.78)">UK Edition</p>
+          <h1>30-Day Structured Meal Plan</h1>
+        </div>
+        <p class="subtitle">
+          A practical, beginner friendly digital plan built around common UK supermarket ingredients,
+          balanced meals, flexible portions and realistic consistency.
+        </p>
+        <div class="cover-badges" aria-label="Plan highlights">
+          <span>30 days of meals</span>
+          <span>Weekly shopping lists</span>
+          <span>Prep guidance</span>
+          <span>Hydration reminders</span>
+          <span>Flexible portions</span>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Start Here</p>
+          <h2>How to use this plan</h2>
+          <p class="lead">
+            This plan is designed to remove daily decision fatigue without making food feel rigid.
+            Follow it closely when you want structure, or use the swaps and portion guide to adapt
+            meals around appetite, training, budget and preference.
+          </p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <strong>1. Choose your portion size</strong>
+            Use the portion guide below rather than forcing exact calories. Start moderate, then
+            adjust based on hunger, energy and progress.
+          </div>
+          <div class="card">
+            <strong>2. Shop once or twice per week</strong>
+            Each weekly list is grouped by supermarket aisle so it is easier to scan on mobile.
+          </div>
+          <div class="card">
+            <strong>3. Prep the small things</strong>
+            Cook one protein, one carbohydrate and one tray of vegetables ahead where possible.
+            Keep sauces simple for flavour without fuss.
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Flexible portions</p>
+          <h2>Simple plate guide</h2>
+          <p class="lead">
+            Use this as a practical starting point. If your goal is fat loss, begin with the lower
+            end of the carbohydrate and fat portions. If your goal is performance or muscle gain,
+            add a little more carbohydrate around training.
+          </p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <strong>Protein</strong>
+            1 to 2 palm-sized portions per main meal. Examples: chicken, turkey, salmon, tuna,
+            eggs, Greek yoghurt, tofu, beans or lentils.
+          </div>
+          <div class="card">
+            <strong>Carbohydrate</strong>
+            1 fist-sized portion at most meals. Examples: oats, potatoes, rice, pasta, wraps,
+            couscous or wholemeal bread.
+          </div>
+          <div class="card">
+            <strong>Vegetables and fibre</strong>
+            Aim for 2 fist-sized portions of vegetables or salad at lunch and dinner where possible.
+            Add fruit, beans, oats and wholegrains for extra fibre.
+          </div>
+        </div>
+        <p class="note" style="margin-top: 22px">
+          This is general wellness guidance, not medical advice. Speak with a GP, registered
+          dietitian or qualified clinician before changing your diet if you have a medical condition,
+          are pregnant or breastfeeding, take medication, have allergies, or have a history of
+          disordered eating.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Meal plan</p>
+          <h2>Your 30-day structure</h2>
+          <p class="lead">
+            Meals are varied but intentionally familiar. The aim is consistency, not perfection:
+            repeat meals you enjoy, swap proteins when needed, and keep seasoning flexible.
+          </p>
+        </div>
+
+        <div class="meal-week">
+          <div class="week-title">
+            <h3>Week 1 - Build the routine</h3>
+            <p>Focus: breakfast consistency and simple packed lunches.</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snack or add-on</th>
+                <th>Prep note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 1</td>
+                <td data-label="Breakfast">Greek yoghurt with oats, berries and chia seeds.</td>
+                <td data-label="Lunch">Chicken salad wrap with spinach, peppers and hummus.</td>
+                <td data-label="Dinner">Salmon with new potatoes, broccoli and lemon yoghurt dressing.</td>
+                <td data-label="Snack or add-on">Apple slices with peanut butter.</td>
+                <td data-label="Prep note">Cook extra potatoes for Day 2 lunch.</td>
+              </tr>
+              <tr>
+                <td>Day 2</td>
+                <td data-label="Breakfast">Scrambled eggs on wholemeal toast with grilled tomatoes.</td>
+                <td data-label="Lunch">Tuna and potato salad with cucumber, sweetcorn and yoghurt dressing.</td>
+                <td data-label="Dinner">Turkey chilli with brown rice and mixed salad.</td>
+                <td data-label="Snack or add-on">Cottage cheese with carrot sticks.</td>
+                <td data-label="Prep note">Freeze one chilli portion for a busy evening.</td>
+              </tr>
+              <tr>
+                <td>Day 3</td>
+                <td data-label="Breakfast">Protein porridge with banana and cinnamon.</td>
+                <td data-label="Lunch">Lentil and vegetable soup with seeded bread.</td>
+                <td data-label="Dinner">Chicken stir-fry with egg noodles and mixed vegetables.</td>
+                <td data-label="Snack or add-on">Skyr yoghurt with berries.</td>
+                <td data-label="Prep note">Use frozen stir-fry vegetables to keep effort low.</td>
+              </tr>
+              <tr>
+                <td>Day 4</td>
+                <td data-label="Breakfast">Overnight oats with apple, yoghurt and flaxseed.</td>
+                <td data-label="Lunch">Falafel couscous bowl with salad and tzatziki.</td>
+                <td data-label="Dinner">Lean beef or bean bolognese with wholewheat pasta.</td>
+                <td data-label="Snack or add-on">Boiled eggs and cherry tomatoes.</td>
+                <td data-label="Prep note">Make two bolognese portions for Day 6.</td>
+              </tr>
+              <tr>
+                <td>Day 5</td>
+                <td data-label="Breakfast">Berry smoothie with milk, oats and protein yoghurt.</td>
+                <td data-label="Lunch">Chicken, avocado and salad sandwich on wholegrain bread.</td>
+                <td data-label="Dinner">Cod with sweet potato wedges, peas and yoghurt tartare.</td>
+                <td data-label="Snack or add-on">Mixed nuts and a pear.</td>
+                <td data-label="Prep note">Cut extra sweet potato wedges before baking.</td>
+              </tr>
+              <tr>
+                <td>Day 6</td>
+                <td data-label="Breakfast">Mushroom omelette with spinach and toast.</td>
+                <td data-label="Lunch">Prawn or tofu rice bowl with cucumber and edamame.</td>
+                <td data-label="Dinner">Leftover bolognese with salad and extra vegetables.</td>
+                <td data-label="Snack or add-on">Hummus with cucumber and oatcakes.</td>
+                <td data-label="Prep note">Refresh leftovers with herbs, chilli flakes or lemon.</td>
+              </tr>
+              <tr>
+                <td>Day 7</td>
+                <td data-label="Breakfast">Wholemeal pancakes with yoghurt and berries.</td>
+                <td data-label="Lunch">Roast chicken or chickpea traybake with vegetables.</td>
+                <td data-label="Dinner">Vegetable frittata with salad and new potatoes.</td>
+                <td data-label="Snack or add-on">Protein yoghurt or roasted chickpeas.</td>
+                <td data-label="Prep note">Plan next week's shop before the evening.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="meal-week">
+          <div class="week-title">
+            <h3>Week 2 - Keep it practical</h3>
+            <p>Focus: simple batch cooking and balanced dinners.</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snack or add-on</th>
+                <th>Prep note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 8</td>
+                <td data-label="Breakfast">Porridge with blueberries, walnuts and semi-skimmed milk.</td>
+                <td data-label="Lunch">Turkey and salad pitta with yoghurt and mint dressing.</td>
+                <td data-label="Dinner">Chicken fajita traybake with peppers, onions and rice.</td>
+                <td data-label="Snack or add-on">Orange and a small handful of almonds.</td>
+                <td data-label="Prep note">Cook extra fajita chicken for Day 9 lunch.</td>
+              </tr>
+              <tr>
+                <td>Day 9</td>
+                <td data-label="Breakfast">Two eggs, baked beans and mushrooms on toast.</td>
+                <td data-label="Lunch">Fajita chicken rice box with lettuce and salsa.</td>
+                <td data-label="Dinner">Pork tenderloin or Quorn fillets with mash, greens and gravy.</td>
+                <td data-label="Snack or add-on">Greek yoghurt with honey.</td>
+                <td data-label="Prep note">Use reduced-salt gravy and add extra greens.</td>
+              </tr>
+              <tr>
+                <td>Day 10</td>
+                <td data-label="Breakfast">Overnight oats with raspberries and pumpkin seeds.</td>
+                <td data-label="Lunch">Egg mayo salad bowl with potatoes and rocket.</td>
+                <td data-label="Dinner">Prawn, pea and courgette risotto.</td>
+                <td data-label="Snack or add-on">Banana with peanut butter.</td>
+                <td data-label="Prep note">Keep egg mayo light with Greek yoghurt.</td>
+              </tr>
+              <tr>
+                <td>Day 11</td>
+                <td data-label="Breakfast">Skyr bowl with granola, kiwi and flaxseed.</td>
+                <td data-label="Lunch">Chicken and vegetable soup with wholemeal roll.</td>
+                <td data-label="Dinner">Beef, turkey or bean tacos with slaw and avocado.</td>
+                <td data-label="Snack or add-on">Cottage cheese with pineapple.</td>
+                <td data-label="Prep note">Make extra taco filling for a quick lunch.</td>
+              </tr>
+              <tr>
+                <td>Day 12</td>
+                <td data-label="Breakfast">Wholemeal toast with smashed avocado and poached egg.</td>
+                <td data-label="Lunch">Taco filling salad bowl with rice and tomatoes.</td>
+                <td data-label="Dinner">Baked haddock with couscous, peas and roasted carrots.</td>
+                <td data-label="Snack or add-on">Apple with cheddar slices.</td>
+                <td data-label="Prep note">Batch roast carrots and peppers together.</td>
+              </tr>
+              <tr>
+                <td>Day 13</td>
+                <td data-label="Breakfast">Protein yoghurt with banana and oat clusters.</td>
+                <td data-label="Lunch">Mozzarella, tomato and chicken pasta salad.</td>
+                <td data-label="Dinner">Slow cooker chicken curry with basmati rice and spinach.</td>
+                <td data-label="Snack or add-on">Rice cakes with hummus.</td>
+                <td data-label="Prep note">Freeze one curry portion for Week 4.</td>
+              </tr>
+              <tr>
+                <td>Day 14</td>
+                <td data-label="Breakfast">Smoked salmon or tofu scramble on rye toast.</td>
+                <td data-label="Lunch">Mediterranean chickpea salad with feta and cucumber.</td>
+                <td data-label="Dinner">Turkey meatballs with tomato sauce, spaghetti and salad.</td>
+                <td data-label="Snack or add-on">Pear and natural yoghurt.</td>
+                <td data-label="Prep note">Make extra meatballs for Day 15 lunch.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="meal-week">
+          <div class="week-title">
+            <h3>Week 3 - Add variety without complexity</h3>
+            <p>Focus: flavour, fibre and repeatable prep.</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snack or add-on</th>
+                <th>Prep note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 15</td>
+                <td data-label="Breakfast">Cinnamon porridge with grated apple and Greek yoghurt.</td>
+                <td data-label="Lunch">Turkey meatball wrap with salad and tomato sauce.</td>
+                <td data-label="Dinner">Chicken and vegetable noodle soup.</td>
+                <td data-label="Snack or add-on">Boiled egg and grapes.</td>
+                <td data-label="Prep note">Use low-salt stock and add extra vegetables.</td>
+              </tr>
+              <tr>
+                <td>Day 16</td>
+                <td data-label="Breakfast">Egg, spinach and mushroom breakfast muffin.</td>
+                <td data-label="Lunch">Tuna, bean and sweetcorn salad with wholemeal pitta.</td>
+                <td data-label="Dinner">Lamb kofta or lentil patties with couscous and salad.</td>
+                <td data-label="Snack or add-on">Skyr yoghurt with berries.</td>
+                <td data-label="Prep note">Make a quick yoghurt, lemon and mint sauce.</td>
+              </tr>
+              <tr>
+                <td>Day 17</td>
+                <td data-label="Breakfast">Overnight oats with pear, cinnamon and seeds.</td>
+                <td data-label="Lunch">Chicken Caesar-style salad with lighter yoghurt dressing.</td>
+                <td data-label="Dinner">Salmon fishcakes with peas, salad and potato wedges.</td>
+                <td data-label="Snack or add-on">Carrot sticks with tzatziki.</td>
+                <td data-label="Prep note">Use tinned salmon if fresh fish is expensive.</td>
+              </tr>
+              <tr>
+                <td>Day 18</td>
+                <td data-label="Breakfast">Greek yoghurt with granola, strawberries and chia.</td>
+                <td data-label="Lunch">Roasted vegetable and hummus wrap with chicken or tofu.</td>
+                <td data-label="Dinner">Turkey burger bowl with wedges, salad and pickles.</td>
+                <td data-label="Snack or add-on">Banana and a small handful of nuts.</td>
+                <td data-label="Prep note">Bake wedges and vegetables on the same tray.</td>
+              </tr>
+              <tr>
+                <td>Day 19</td>
+                <td data-label="Breakfast">Beans, poached egg and tomatoes on wholemeal toast.</td>
+                <td data-label="Lunch">Prawn pasta salad with cucumber, peas and lemon.</td>
+                <td data-label="Dinner">Chicken, bean and vegetable casserole with crusty bread.</td>
+                <td data-label="Snack or add-on">Apple with peanut butter.</td>
+                <td data-label="Prep note">Double the casserole and freeze one portion.</td>
+              </tr>
+              <tr>
+                <td>Day 20</td>
+                <td data-label="Breakfast">Smoothie bowl with yoghurt, berries, oats and seeds.</td>
+                <td data-label="Lunch">Casserole leftovers with salad or steamed greens.</td>
+                <td data-label="Dinner">Tofu or chicken teriyaki rice bowl with broccoli.</td>
+                <td data-label="Snack or add-on">Cottage cheese with cucumber.</td>
+                <td data-label="Prep note">Choose a lower-sugar teriyaki sauce where possible.</td>
+              </tr>
+              <tr>
+                <td>Day 21</td>
+                <td data-label="Breakfast">Vegetable omelette with toast and fruit.</td>
+                <td data-label="Lunch">Jacket potato with tuna, beans or cottage cheese and salad.</td>
+                <td data-label="Dinner">Roast chicken, lentil loaf or tofu with vegetables and potatoes.</td>
+                <td data-label="Snack or add-on">Protein yoghurt with cinnamon.</td>
+                <td data-label="Prep note">Save leftover roast vegetables for Day 22.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="meal-week">
+          <div class="week-title">
+            <h3>Week 4 - Make it sustainable</h3>
+            <p>Focus: easy repeats, freezer support and confidence.</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snack or add-on</th>
+                <th>Prep note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 22</td>
+                <td data-label="Breakfast">Porridge with frozen berries, yoghurt and sunflower seeds.</td>
+                <td data-label="Lunch">Roast vegetable, chicken and couscous box.</td>
+                <td data-label="Dinner">Lean beef, turkey or lentil shepherd's pie with green beans.</td>
+                <td data-label="Snack or add-on">Orange and almonds.</td>
+                <td data-label="Prep note">Top the pie with potato and cauliflower mash if preferred.</td>
+              </tr>
+              <tr>
+                <td>Day 23</td>
+                <td data-label="Breakfast">Rye toast with peanut butter, banana and yoghurt.</td>
+                <td data-label="Lunch">Shepherd's pie leftovers with side salad.</td>
+                <td data-label="Dinner">Chicken tikka-style skewers with rice, cucumber and mint yoghurt.</td>
+                <td data-label="Snack or add-on">Boiled eggs and tomatoes.</td>
+                <td data-label="Prep note">Use a spice blend and yoghurt marinade to save time.</td>
+              </tr>
+              <tr>
+                <td>Day 24</td>
+                <td data-label="Breakfast">Egg and vegetable breakfast wrap.</td>
+                <td data-label="Lunch">Salmon, potato and spinach salad with lemon dressing.</td>
+                <td data-label="Dinner">Pasta primavera with chicken, prawns or cannellini beans.</td>
+                <td data-label="Snack or add-on">Greek yoghurt with berries.</td>
+                <td data-label="Prep note">Add peas and courgette for colour and fibre.</td>
+              </tr>
+              <tr>
+                <td>Day 25</td>
+                <td data-label="Breakfast">Overnight oats with cocoa, banana and chia seeds.</td>
+                <td data-label="Lunch">Chicken pesto pasta salad with rocket and tomatoes.</td>
+                <td data-label="Dinner">Turkey mince, tofu or bean chilli loaded sweet potatoes.</td>
+                <td data-label="Snack or add-on">Pear with cheddar or cottage cheese.</td>
+                <td data-label="Prep note">Cook extra chilli for Day 27 lunch.</td>
+              </tr>
+              <tr>
+                <td>Day 26</td>
+                <td data-label="Breakfast">Skyr bowl with apple, cinnamon and granola.</td>
+                <td data-label="Lunch">Greek-style chicken or chickpea bowl with pitta.</td>
+                <td data-label="Dinner">Baked cod or tofu with rice, peas and roasted peppers.</td>
+                <td data-label="Snack or add-on">Rice cakes with peanut butter.</td>
+                <td data-label="Prep note">Use frozen peas and peppers for convenience.</td>
+              </tr>
+              <tr>
+                <td>Day 27</td>
+                <td data-label="Breakfast">Mushroom and tomato omelette with toast.</td>
+                <td data-label="Lunch">Chilli leftovers with salad and yoghurt.</td>
+                <td data-label="Dinner">Chicken sausage or veggie sausage traybake with potatoes.</td>
+                <td data-label="Snack or add-on">Hummus with peppers and cucumber.</td>
+                <td data-label="Prep note">Choose higher-protein sausages when available.</td>
+              </tr>
+              <tr>
+                <td>Day 28</td>
+                <td data-label="Breakfast">Wholemeal pancakes with berries and yoghurt.</td>
+                <td data-label="Lunch">Avocado, egg and bean salad bowl.</td>
+                <td data-label="Dinner">Homemade lean beef, turkey or bean lasagne with salad.</td>
+                <td data-label="Snack or add-on">Protein yoghurt or fruit and nuts.</td>
+                <td data-label="Prep note">Freeze a lasagne portion for the next busy week.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="meal-week">
+          <div class="week-title">
+            <h3>Days 29 and 30 - Finish strong</h3>
+            <p>Focus: review what worked and repeat the easiest wins.</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snack or add-on</th>
+                <th>Prep note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 29</td>
+                <td data-label="Breakfast">Your favourite breakfast from the plan.</td>
+                <td data-label="Lunch">Balanced leftovers box: protein, carbs, vegetables and sauce.</td>
+                <td data-label="Dinner">Stir-fry night with chicken, tofu or prawns and noodles.</td>
+                <td data-label="Snack or add-on">Fruit with Greek yoghurt.</td>
+                <td data-label="Prep note">Write down three meals you would happily repeat.</td>
+              </tr>
+              <tr>
+                <td>Day 30</td>
+                <td data-label="Breakfast">High-protein yoghurt bowl with oats, fruit and seeds.</td>
+                <td data-label="Lunch">Soup, sandwich or salad using remaining ingredients.</td>
+                <td data-label="Dinner">Flexible plate: lean protein, potatoes or rice, vegetables and sauce.</td>
+                <td data-label="Snack or add-on">Your preferred snack from the plan.</td>
+                <td data-label="Prep note">Plan next week around your easiest repeat meals.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Shopping organisation</p>
+          <h2>Weekly grocery lists</h2>
+          <p class="lead">
+            Quantities depend on household size and appetite. Buy enough for your portions, then use
+            frozen vegetables, tinned fish, beans and microwave grains as backup options.
+          </p>
+        </div>
+        <div class="shopping-grid">
+          <div class="shopping-list">
+            <h3>Week 1 shop</h3>
+            <ul>
+              <li>Protein: chicken breast, salmon, tuna, turkey mince, eggs, Greek yoghurt, tofu or falafel.</li>
+              <li>Carbs: oats, wraps, new potatoes, brown rice, egg noodles, wholewheat pasta, wholemeal bread.</li>
+              <li>Fruit and veg: berries, bananas, apples, broccoli, spinach, peppers, tomatoes, cucumber, sweet potatoes.</li>
+              <li>Cupboard: hummus, peanut butter, chia seeds, lentils, sweetcorn, tomato passata, mixed nuts.</li>
+            </ul>
+          </div>
+          <div class="shopping-list">
+            <h3>Week 2 shop</h3>
+            <ul>
+              <li>Protein: turkey slices, pork tenderloin or Quorn, prawns, chicken, beef or beans, haddock, meatballs.</li>
+              <li>Carbs: porridge oats, pittas, rice, potatoes, risotto rice, taco shells, couscous, spaghetti.</li>
+              <li>Fruit and veg: blueberries, raspberries, kiwi, mushrooms, onions, peppers, carrots, avocado, spinach.</li>
+              <li>Cupboard: salsa, reduced-salt gravy, chickpeas, feta, pumpkin seeds, herbs, curry spices.</li>
+            </ul>
+          </div>
+          <div class="shopping-list">
+            <h3>Week 3 shop</h3>
+            <ul>
+              <li>Protein: chicken, tuna, lamb mince or lentils, salmon, turkey burgers, tofu, cottage cheese, eggs.</li>
+              <li>Carbs: oats, breakfast muffins, pittas, wraps, potatoes, rice, noodles, crusty bread.</li>
+              <li>Fruit and veg: apples, pears, strawberries, grapes, carrots, courgettes, broccoli, salad, green beans.</li>
+              <li>Cupboard: beans, low-salt stock, teriyaki sauce, oatcakes, yoghurt dressing ingredients, pickles.</li>
+            </ul>
+          </div>
+          <div class="shopping-list">
+            <h3>Week 4 shop</h3>
+            <ul>
+              <li>Protein: lean mince, chicken, cod, tofu, eggs, sausages, cannellini beans, Greek yoghurt, skyr.</li>
+              <li>Carbs: oats, rye bread, rice, pasta, sweet potatoes, pittas, lasagne sheets, potatoes.</li>
+              <li>Fruit and veg: frozen berries, bananas, tomatoes, spinach, rocket, peas, peppers, cucumber, salad leaves.</li>
+              <li>Cupboard: chilli spices, pesto, passata, granola, peanut butter, chia seeds, curry or tikka spices.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Meal prep</p>
+          <h2>Low-effort prep system</h2>
+          <p class="lead">
+            You do not need a full Sunday batch-cook to succeed. Prep the pieces that reduce friction:
+            washed salad, cooked protein, ready carbohydrates and two simple sauces.
+          </p>
+        </div>
+        <div class="prep-list">
+          <div class="prep-step">
+            <span>1</span>
+            <div>
+              <h3>Wash and store produce</h3>
+              <p>Wash salad leaves, chop cucumber and peppers, and keep fruit visible. The easier option usually wins.</p>
+            </div>
+          </div>
+          <div class="prep-step">
+            <span>2</span>
+            <div>
+              <h3>Cook one flexible protein</h3>
+              <p>Roast chicken, turkey mince, tofu, lentils or boiled eggs can become wraps, bowls, salads or leftovers.</p>
+            </div>
+          </div>
+          <div class="prep-step">
+            <span>3</span>
+            <div>
+              <h3>Prepare a simple carbohydrate</h3>
+              <p>Cook rice, potatoes, pasta or couscous. Cool leftovers quickly and store safely in the fridge.</p>
+            </div>
+          </div>
+          <div class="prep-step">
+            <span>4</span>
+            <div>
+              <h3>Keep flavour ready</h3>
+              <p>Use lemon, herbs, salsa, yoghurt dressing, hummus, light pesto or reduced-salt stock to keep meals enjoyable.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Easy swaps</p>
+          <h2>Adapt without starting again</h2>
+          <p class="lead">
+            Use these swaps when ingredients are out of stock, budget changes, or you want a vegetarian option.
+          </p>
+        </div>
+        <table class="swap-table">
+          <thead>
+            <tr>
+              <th>Original</th>
+              <th>Simple swaps</th>
+              <th>Best use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Original">Chicken</td>
+              <td data-label="Simple swaps">Turkey, tofu, eggs, tuna, prawns, beans or lentils.</td>
+              <td data-label="Best use">Wraps, bowls, salads, stir-fries and traybakes.</td>
+            </tr>
+            <tr>
+              <td data-label="Original">Rice</td>
+              <td data-label="Simple swaps">Potatoes, couscous, pasta, wraps, pittas or microwave grains.</td>
+              <td data-label="Best use">Busy evenings and packed lunches.</td>
+            </tr>
+            <tr>
+              <td data-label="Original">Fresh vegetables</td>
+              <td data-label="Simple swaps">Frozen mixed veg, peas, spinach, stir-fry bags or tinned tomatoes.</td>
+              <td data-label="Best use">Reducing waste and keeping fibre consistent.</td>
+            </tr>
+            <tr>
+              <td data-label="Original">Greek yoghurt</td>
+              <td data-label="Simple swaps">Skyr, natural yoghurt, cottage cheese or dairy-free high-protein yoghurt.</td>
+              <td data-label="Best use">Breakfasts, sauces, snacks and lighter dressings.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Consistency tips</p>
+          <h2>Make the plan easier to finish</h2>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <strong>Hydration reminder</strong>
+            Keep a water bottle visible. Tea, coffee, lower-fat milk and sugar-free drinks can also contribute to fluid intake.
+          </div>
+          <div class="card">
+            <strong>Progress marker</strong>
+            Track energy, hunger, digestion, sleep and consistency. Weight is only one data point and can change day to day.
+          </div>
+          <div class="card">
+            <strong>Busy day rule</strong>
+            If the planned meal feels too hard, build a simple plate: protein, carbohydrate, vegetables and flavour. That still counts.
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <p class="eyebrow">Clear expectations</p>
+          <h2>Wellness disclaimer</h2>
+        </div>
+        <p class="lead">
+          Health Metric Pro provides general nutrition planning support for adults. This plan is not
+          personalised medical advice, a diagnosis, a treatment plan, or a guarantee of weight loss,
+          muscle gain or health outcomes. Individual needs vary based on age, sex, body size,
+          activity, medication, medical conditions, pregnancy, breastfeeding, allergies, budget and
+          food preferences. For personalised advice, speak with a GP, registered dietitian or
+          qualified health professional.
+        </p>
+      </section>
+
+      <footer class="footer-note">
+        <span>Health Metric Pro - 30-Day Structured Meal Plan, UK Edition</span>
+        <span>Print-friendly digital product for paid customers</span>
+      </footer>
+    </article>
+  </body>
+</html>

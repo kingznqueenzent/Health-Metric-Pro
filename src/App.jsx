@@ -12,7 +12,7 @@ import {
 const siteUrl = "https://www.healthmetricpro.co.uk";
 const stripeUrl = "https://buy.stripe.com/5kQ9AV9dng0UdQlaQ81Jm00";
 const premiumDownloadUrl =
-  "https://drive.google.com/file/d/1mZBAPvEkQHV5eIqRkRtVpgyYiHkGo_IU/view?usp=drive_link";
+  "/health-metric-pro-30-day-premium-meal-plan.html";
 const contactEmail = "contact@healthmetricpro.co.uk";
 
 const seoPages = {
@@ -1150,7 +1150,7 @@ function PrivacyPolicy() {
         Premium purchases are handled by Stripe through a Stripe Payment Link.
         Stripe may collect payment, billing and fraud-prevention information
         under its own privacy terms. Premium delivery is provided through a
-        Google Docs or Google Drive link.
+        premium digital document link.
       </p>
 
       <h2>Cookies And Analytics</h2>
@@ -1199,9 +1199,9 @@ function Terms() {
 
       <h2>Premium Delivery</h2>
       <p>
-        The premium download page opens the current Google Docs delivery link.
-        Access may depend on the document sharing settings and availability of
-        Google services.
+        The premium download page opens the current premium digital meal plan
+        link. Access may depend on website availability and your device or
+        browser settings.
       </p>
 
       <h2>Contact</h2>
