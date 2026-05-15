@@ -114,6 +114,44 @@ const tools = [
   },
 ];
 
+const premiumTrustItems = [
+  "Secure Stripe checkout",
+  "Instant PDF access after purchase",
+  "UK supermarket ingredients",
+  "Beginner friendly and mobile-ready",
+];
+
+const premiumValueBullets = [
+  "30 days of structured meals with clear daily direction",
+  "Weekly grocery lists grouped for easier shopping",
+  "Simple prep notes for busy adults and packed lunches",
+  "Flexible portions with realistic nutrition guidance",
+  "Print-friendly PDF that also reads well on mobile",
+];
+
+const premiumFaqs = [
+  {
+    question: "How does the premium download work?",
+    answer:
+      "After checkout, Stripe redirects you to the premium download page. The button opens the 30-day plan as a PDF so you can save it, print it, or keep it on your phone.",
+  },
+  {
+    question: "Can I use it on mobile?",
+    answer:
+      "Yes. The plan is designed as a mobile-friendly PDF with clear headings, weekly lists, daily meals, prep notes, and short sections that are easy to scan.",
+  },
+  {
+    question: "Is access instant?",
+    answer:
+      "Yes. Access is available immediately after the Stripe checkout redirect completes. No account setup is required for the current delivery flow.",
+  },
+  {
+    question: "Who is the plan for?",
+    answer:
+      "It is for busy adults who want practical UK-focused meal structure, beginner friendly guidance, and realistic consistency without complicated recipes.",
+  },
+];
+
 const mealPlan = [
   {
     day: "Monday",
@@ -472,6 +510,35 @@ function EmailCapture({
   );
 }
 
+function TrustStrip() {
+  return (
+    <div className="trust-strip" aria-label="Premium plan trust highlights">
+      {premiumTrustItems.map((item) => (
+        <span key={item}>{item}</span>
+      ))}
+    </div>
+  );
+}
+
+function PremiumFaq() {
+  return (
+    <section className="faq-section" aria-labelledby="premium-faq-title">
+      <div className="section-heading">
+        <p className="eyebrow">Questions before upgrading</p>
+        <h2 id="premium-faq-title">Premium meal plan FAQ</h2>
+      </div>
+      <div className="faq-grid">
+        {premiumFaqs.map((item) => (
+          <article className="faq-card" key={item.question}>
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Home() {
   return (
     <AppShell>
@@ -481,17 +548,25 @@ function Home() {
           <p className="eyebrow">UK-focused health and nutrition tools</p>
           <h1>Health Metric Pro</h1>
           <p className="hero-copy">
-            Calculate BMI, protein, calories, and hydration targets, then turn
-            the numbers into a simple 7-day meal structure.
+            Calculate BMI, protein, calories, and hydration targets, then move
+            from free tools into a clear 30-day meal plan when you want more
+            structure.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/thank-you-meal-plan">
               Start Your Free Meal Plan
             </Link>
-            <Link className="button secondary" to="/bmi-calculator">
-              Start With BMI
-            </Link>
+            <a
+              className="button secondary"
+              href={stripeUrl}
+              onClick={() =>
+                trackPremiumUpgradeClick({ event_label: "homepage_hero" })
+              }
+            >
+              Unlock My 30-Day Plan
+            </a>
           </div>
+          <TrustStrip />
         </div>
       </section>
 
@@ -513,11 +588,11 @@ function Home() {
       <section className="cta-band">
         <div>
           <p className="eyebrow">Start your free meal plan</p>
-          <h2>Turn your calculator results into a practical next step</h2>
+          <h2>Try the free sample, then upgrade when you want structure</h2>
           <p>
             Start with balanced breakfasts, portable lunches, and protein-led
-            dinners before upgrading to the full premium plan. Built around
-            familiar UK ingredients and realistic expectations.
+            dinners. When you want the full plan, the premium PDF gives you 30
+            days of meals, shopping lists, prep notes, and instant access.
           </p>
         </div>
         <Link className="button primary" to="/thank-you-meal-plan">
@@ -525,15 +600,22 @@ function Home() {
         </Link>
       </section>
 
-      <section className="conversion-grid">
-        <article>
-          <p className="eyebrow">Premium teaser</p>
-          <h2>Upgrade when you want structure beyond the sample week</h2>
+      <section className="premium-offer" aria-labelledby="premium-offer-title">
+        <div className="premium-offer-copy">
+          <p className="eyebrow">Premium plan</p>
+          <h2 id="premium-offer-title">
+            Unlock the 30-Day Structured Meal Plan
+          </h2>
           <p>
-            The premium plan is designed for people who want a clearer 30-day
-            rhythm, grocery lists, nutrition guidance, and instant digital
-            access after secure Stripe checkout.
+            A polished UK Edition PDF for people who want the next step after
+            the free sample: clear daily meals, grocery organisation, and
+            realistic guidance you can follow on mobile or print.
           </p>
+          <ul className="premium-list">
+            {premiumValueBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
           <a
             className="button primary"
             href={stripeUrl}
@@ -541,20 +623,47 @@ function Home() {
               trackPremiumUpgradeClick({ event_label: "homepage_teaser" })
             }
           >
-            View Premium Plan
+            Get Instant Access
           </a>
+          <p className="premium-note">
+            Secure Stripe checkout. Instant digital access after purchase.
+          </p>
+        </div>
+        <aside className="premium-proof" aria-label="Why customers upgrade">
+          <p className="eyebrow">Why upgrade</p>
+          <h3>Built for realistic UK nutrition planning</h3>
+          <ul className="trust-list">
+            <li>Common UK supermarket ingredients</li>
+            <li>Beginner friendly daily structure</li>
+            <li>Mobile-friendly access and print-ready PDF</li>
+            <li>General wellness guidance, not medical advice</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section className="conversion-grid">
+        <article>
+          <p className="eyebrow">Free tools</p>
+          <h2>Use the calculators before you plan meals</h2>
+          <p>
+            Start with BMI, protein, calories, and water targets so the meal
+            plan feels more relevant to your routine.
+          </p>
+          <Link className="button secondary subtle" to="/bmi-calculator">
+            Start With BMI
+          </Link>
         </article>
         <article>
-          <p className="eyebrow">Trust signals</p>
-          <h2>Built for realistic UK nutrition planning</h2>
-          <ul className="trust-list">
-            <li>UK-focused calculators and meal wording</li>
-            <li>Secure checkout through Stripe</li>
-            <li>Instant digital access to the premium document</li>
-            <li>General guidance, not a medical diagnosis</li>
-          </ul>
+          <p className="eyebrow">Premium delivery</p>
+          <h2>Ready when you are</h2>
+          <p>
+            The premium PDF is delivered after checkout, so you can open it on
+            mobile, save it, or print it before your next food shop.
+          </p>
         </article>
       </section>
+
+      <PremiumFaq />
     </AppShell>
   );
 }
@@ -973,7 +1082,8 @@ function MealPlan() {
         <h1>7-Day Meal Plan</h1>
         <p>
           A practical sample week built around balanced meals, protein at each
-          sitting, and supermarket-friendly UK ingredients.
+          sitting, and supermarket-friendly UK ingredients. Upgrade when you
+          want the full 30-day structure, grocery lists, and prep guidance.
         </p>
         <a
           className="button primary"
@@ -982,8 +1092,11 @@ function MealPlan() {
             trackPremiumUpgradeClick({ event_label: "meal_plan_hero" })
           }
         >
-          Upgrade to Premium
+          Unlock My 30-Day Plan
         </a>
+        <p className="small-note">
+          Instant access after secure Stripe checkout.
+        </p>
       </section>
 
       <section className="meal-grid" aria-label="Sample 7-day meal plan">
@@ -1017,16 +1130,19 @@ function MealPlan() {
           <p className="eyebrow">Premium upgrade</p>
           <h2>Unlock the 30-Day Structured Meal Plan</h2>
           <p>
-            Get a mobile-friendly digital plan with grocery lists, simple
-            nutrition guidance, and instant access after secure Stripe
-            checkout.
+            Get the complete UK Edition PDF with daily meal structure, weekly
+            grocery lists, flexible portions, and simple prep notes for busy
+            adults.
           </p>
           <ul className="premium-list">
-            <li>30-day structured meal rhythm</li>
-            <li>Grocery lists for easier planning</li>
-            <li>Nutrition guidance for realistic consistency</li>
-            <li>Instant digital access after purchase</li>
+            {premiumValueBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
+          <p className="premium-note">
+            Secure Stripe checkout. Instant access after purchase. General
+            wellness guidance, not medical advice.
+          </p>
         </div>
         <a
           className="button primary"
@@ -1035,9 +1151,10 @@ function MealPlan() {
             trackPremiumUpgradeClick({ event_label: "meal_plan_premium_band" })
           }
         >
-          Buy Premium Plan
+          Start My Premium Plan
         </a>
       </section>
+      <PremiumFaq />
       <QuickLinks includeTools />
     </AppShell>
   );
@@ -1054,8 +1171,9 @@ function PremiumDownload() {
         <p className="eyebrow">Payment successful</p>
         <h1>Your premium meal plan is ready</h1>
         <p>
-          Open the premium plan below and keep it available for meal prep,
-          shopping, and weekly planning.
+          Open your 30-Day Structured Meal Plan below. You can save it on
+          mobile, print it, or keep it ready for meal prep, shopping, and
+          weekly planning.
         </p>
         <div className="hero-actions centered">
           <a
@@ -1067,7 +1185,7 @@ function PremiumDownload() {
               trackPremiumDownloadOpen({ event_label: "premium_download_page" })
             }
           >
-            Open Premium Meal Plan
+            Open My 30-Day Plan
           </a>
           <Link className="button secondary" to="/">
             Back to Tools

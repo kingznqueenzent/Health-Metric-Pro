@@ -196,6 +196,23 @@ h2 {
   justify-content: center;
 }
 
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+
+.trust-strip span {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -232,6 +249,10 @@ h2 {
   color: #0f4f4a;
 }
 
+.button.secondary.subtle {
+  background: #e3f4ee;
+}
+
 .page-hero .button.secondary,
 .success-page .button.secondary {
   background: #e3f4ee;
@@ -242,12 +263,14 @@ h2 {
 .meal-grid,
 .cta-band,
 .conversion-grid,
+.premium-offer,
 .premium-band,
 .success-page,
 .page-hero,
 .quick-links,
 .legal-page,
-.email-capture {
+.email-capture,
+.faq-section {
   width: min(1120px, calc(100% - 2rem));
   margin-inline: auto;
 }
@@ -257,10 +280,12 @@ h2 {
 .meal-grid,
 .cta-band,
 .conversion-grid,
+.premium-offer,
 .premium-band,
 .success-page,
 .quick-links,
-.email-capture {
+.email-capture,
+.faq-section {
   margin-top: clamp(2.4rem, 5vw, 4.5rem);
 }
 
@@ -360,6 +385,64 @@ h2 {
   margin-top: 0.5rem;
 }
 
+.premium-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  gap: 1rem;
+  padding: clamp(1.3rem, 4vw, 2.2rem);
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(227, 244, 238, 0.92), rgba(255, 255, 255, 0.96)),
+    #ffffff;
+  box-shadow: 0 22px 55px rgba(10, 45, 45, 0.1);
+}
+
+.premium-offer-copy {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.premium-offer h2 {
+  color: #0f4f4a;
+}
+
+.premium-offer p {
+  max-width: 44rem;
+  color: #415f5c;
+  line-height: 1.65;
+}
+
+.premium-offer .button {
+  width: fit-content;
+}
+
+.premium-proof {
+  align-self: start;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  border: 1px solid rgba(33, 93, 92, 0.13);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.premium-proof h3 {
+  color: #123332;
+  font-size: 1.35rem;
+}
+
+.premium-note {
+  margin: 0;
+  color: #52706d;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.premium-band .premium-note {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.86);
+}
+
 .trust-list,
 .premium-list {
   display: grid;
@@ -382,6 +465,31 @@ h2 {
   color: #0f766e;
   content: "\2713";
   font-weight: 900;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.faq-card {
+  padding: clamp(1rem, 3vw, 1.3rem);
+  border: 1px solid rgba(33, 93, 92, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 38px rgba(10, 45, 45, 0.07);
+}
+
+.faq-card h3 {
+  color: #0f4f4a;
+  font-size: 1.12rem;
+}
+
+.faq-card p {
+  margin: 0.65rem 0 0;
+  color: #415f5c;
+  line-height: 1.62;
 }
 
 .page-hero {
@@ -739,6 +847,8 @@ h2 {
   .tool-grid,
   .calculator-layout,
   .conversion-grid,
+  .premium-offer,
+  .faq-grid,
   .email-capture {
     grid-template-columns: 1fr;
   }
@@ -751,6 +861,10 @@ h2 {
   .premium-band {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .premium-offer .button {
+    width: 100%;
   }
 }
 
@@ -786,6 +900,10 @@ h2 {
   .hero-actions,
   .hero-actions .button {
     width: 100%;
+  }
+
+  .trust-strip span {
+    flex: 1 1 100%;
   }
 
   .button {
