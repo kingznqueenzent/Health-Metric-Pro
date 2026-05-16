@@ -14,6 +14,8 @@ const stripeUrl = "https://buy.stripe.com/5kQ9AV9dng0UdQlaQ81Jm00";
 const premiumDownloadUrl =
   "/health-metric-pro-30-day-premium-meal-plan.pdf";
 const contactEmail = "contact@healthmetricpro.co.uk";
+const premiumCtaButtonText = "Unlock My 30-Day Premium Plan";
+const premiumDownloadButtonText = "Open My 30-Day Plan";
 
 const seoPages = {
   home: {
@@ -552,6 +554,15 @@ function PremiumFaq() {
 }
 
 function Home() {
+  const { pathname } = useLocation();
+  const trackPremiumCta = (location) =>
+    trackPremiumUpgradeClick({
+      event_label: location,
+      location,
+      page_path: pathname,
+      button_text: premiumCtaButtonText,
+    });
+
   return (
     <AppShell>
       <Seo {...seoPages.home} />
@@ -571,11 +582,9 @@ function Home() {
             <a
               className="button secondary"
               href={stripeUrl}
-              onClick={() =>
-                trackPremiumUpgradeClick({ event_label: "homepage_hero" })
-              }
+              onClick={() => trackPremiumCta("homepage_hero")}
             >
-              Unlock My 30-Day Premium Plan
+              {premiumCtaButtonText}
             </a>
           </div>
           <TrustStrip />
@@ -632,11 +641,9 @@ function Home() {
           <a
             className="button primary"
             href={stripeUrl}
-            onClick={() =>
-              trackPremiumUpgradeClick({ event_label: "homepage_teaser" })
-            }
+            onClick={() => trackPremiumCta("homepage_teaser")}
           >
-            Unlock My 30-Day Premium Plan
+            {premiumCtaButtonText}
           </a>
           <p className="premium-note">
             Secure checkout powered by Stripe. Instant digital delivery.
@@ -1089,6 +1096,15 @@ function WaterCalculator() {
 }
 
 function MealPlan() {
+  const { pathname } = useLocation();
+  const trackPremiumCta = (location) =>
+    trackPremiumUpgradeClick({
+      event_label: location,
+      location,
+      page_path: pathname,
+      button_text: premiumCtaButtonText,
+    });
+
   return (
     <AppShell>
       <Seo {...seoPages.mealPlan} />
@@ -1104,11 +1120,9 @@ function MealPlan() {
         <a
           className="button primary"
           href={stripeUrl}
-          onClick={() =>
-            trackPremiumUpgradeClick({ event_label: "meal_plan_hero" })
-          }
+          onClick={() => trackPremiumCta("meal_plan_hero")}
         >
-          Unlock My 30-Day Premium Plan
+          {premiumCtaButtonText}
         </a>
         <p className="small-note">
           Secure checkout powered by Stripe. Instant digital delivery.
@@ -1164,11 +1178,9 @@ function MealPlan() {
         <a
           className="button primary"
           href={stripeUrl}
-          onClick={() =>
-            trackPremiumUpgradeClick({ event_label: "meal_plan_premium_band" })
-          }
+          onClick={() => trackPremiumCta("meal_plan_premium_band")}
         >
-          Unlock My 30-Day Premium Plan
+          {premiumCtaButtonText}
         </a>
       </section>
       <PremiumFaq />
@@ -1178,6 +1190,8 @@ function MealPlan() {
 }
 
 function PremiumDownload() {
+  const { pathname } = useLocation();
+
   return (
     <AppShell>
       <Seo {...seoPages.premiumDownload} />
@@ -1199,10 +1213,15 @@ function PremiumDownload() {
             target="_blank"
             rel="noreferrer"
             onClick={() =>
-              trackPremiumDownloadOpen({ event_label: "premium_download_page" })
+              trackPremiumDownloadOpen({
+                event_label: "premium_download_page",
+                location: "premium_download_page",
+                page_path: pathname,
+                button_text: premiumDownloadButtonText,
+              })
             }
           >
-            Open My 30-Day Plan
+            {premiumDownloadButtonText}
           </a>
           <Link className="button secondary" to="/">
             Back to Tools
