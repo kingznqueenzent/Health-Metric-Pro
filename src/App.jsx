@@ -115,18 +115,20 @@ const tools = [
 ];
 
 const premiumTrustItems = [
-  "Secure Stripe checkout",
-  "Instant PDF access after purchase",
-  "UK supermarket ingredients",
-  "Beginner friendly and mobile-ready",
+  "Secure checkout powered by Stripe",
+  "Instant digital delivery",
+  "UK-focused meal planning",
 ];
 
 const premiumValueBullets = [
-  "30 days of structured meals with clear daily direction",
-  "Weekly grocery lists grouped for easier shopping",
-  "Simple prep notes for busy adults and packed lunches",
-  "Flexible portions with realistic nutrition guidance",
-  "Print-friendly PDF that also reads well on mobile",
+  "Full 30-Day Structured Nutrition Plan",
+  "UK Grocery Lists Included",
+  "Daily Meal Guidance",
+  "Protein & Calorie Support",
+  "Beginner-Friendly Structure",
+  "Instant PDF Access",
+  "Mobile Friendly Format",
+  "Designed for Sustainable Results",
 ];
 
 const premiumFaqs = [
@@ -549,8 +551,8 @@ function Home() {
           <h1>Health Metric Pro</h1>
           <p className="hero-copy">
             Calculate BMI, protein, calories, and hydration targets, then move
-            from free tools into a clear 30-day meal plan when you want more
-            structure.
+            from free tools into a structured 30-day premium plan built for
+            practical UK meal planning.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/thank-you-meal-plan">
@@ -563,7 +565,7 @@ function Home() {
                 trackPremiumUpgradeClick({ event_label: "homepage_hero" })
               }
             >
-              Unlock My 30-Day Plan
+              Unlock My 30-Day Premium Plan
             </a>
           </div>
           <TrustStrip />
@@ -608,8 +610,9 @@ function Home() {
           </h2>
           <p>
             A polished UK Edition PDF for people who want the next step after
-            the free sample: clear daily meals, grocery organisation, and
-            realistic guidance you can follow on mobile or print.
+            the free sample: a full 30-day structured nutrition plan, UK grocery
+            lists, daily meal guidance, and practical support for sustainable
+            results.
           </p>
           <ul className="premium-list">
             {premiumValueBullets.map((item) => (
@@ -623,10 +626,11 @@ function Home() {
               trackPremiumUpgradeClick({ event_label: "homepage_teaser" })
             }
           >
-            Get Instant Access
+            Unlock My 30-Day Premium Plan
           </a>
           <p className="premium-note">
-            Secure Stripe checkout. Instant digital access after purchase.
+            Secure checkout powered by Stripe. Instant digital delivery.
+            UK-focused meal planning.
           </p>
         </div>
         <aside className="premium-proof" aria-label="Why customers upgrade">
@@ -634,8 +638,9 @@ function Home() {
           <h3>Built for realistic UK nutrition planning</h3>
           <ul className="trust-list">
             <li>Common UK supermarket ingredients</li>
-            <li>Beginner friendly daily structure</li>
-            <li>Mobile-friendly access and print-ready PDF</li>
+            <li>Beginner-friendly daily meal guidance</li>
+            <li>Protein and calorie support for realistic planning</li>
+            <li>Mobile friendly format with instant PDF access</li>
             <li>General wellness guidance, not medical advice</li>
           </ul>
         </aside>
@@ -1083,7 +1088,8 @@ function MealPlan() {
         <p>
           A practical sample week built around balanced meals, protein at each
           sitting, and supermarket-friendly UK ingredients. Upgrade when you
-          want the full 30-day structure, grocery lists, and prep guidance.
+          want the full 30-day structured nutrition plan with grocery lists,
+          daily guidance, and mobile friendly PDF access.
         </p>
         <a
           className="button primary"
@@ -1092,10 +1098,10 @@ function MealPlan() {
             trackPremiumUpgradeClick({ event_label: "meal_plan_hero" })
           }
         >
-          Unlock My 30-Day Plan
+          Unlock My 30-Day Premium Plan
         </a>
         <p className="small-note">
-          Instant access after secure Stripe checkout.
+          Secure checkout powered by Stripe. Instant digital delivery.
         </p>
       </section>
 
@@ -1130,9 +1136,9 @@ function MealPlan() {
           <p className="eyebrow">Premium upgrade</p>
           <h2>Unlock the 30-Day Structured Meal Plan</h2>
           <p>
-            Get the complete UK Edition PDF with daily meal structure, weekly
-            grocery lists, flexible portions, and simple prep notes for busy
-            adults.
+            Get the complete UK Edition PDF with a full 30-day structure, UK
+            grocery lists, daily meal guidance, protein and calorie support, and
+            a beginner-friendly format designed for sustainable results.
           </p>
           <ul className="premium-list">
             {premiumValueBullets.map((item) => (
@@ -1140,8 +1146,9 @@ function MealPlan() {
             ))}
           </ul>
           <p className="premium-note">
-            Secure Stripe checkout. Instant access after purchase. General
-            wellness guidance, not medical advice.
+            Secure checkout powered by Stripe. Instant digital delivery.
+            UK-focused meal planning. General wellness guidance, not medical
+            advice.
           </p>
         </div>
         <a
@@ -1151,7 +1158,7 @@ function MealPlan() {
             trackPremiumUpgradeClick({ event_label: "meal_plan_premium_band" })
           }
         >
-          Start My Premium Plan
+          Unlock My 30-Day Premium Plan
         </a>
       </section>
       <PremiumFaq />
