@@ -117,9 +117,10 @@ const tools = [
 ];
 
 const premiumTrustItems = [
-  "Secure checkout powered by Stripe",
-  "Instant digital delivery",
-  "UK-focused meal planning",
+  "UK-focused guidance",
+  "Instant results",
+  "Secure Stripe checkout for premium access",
+  "No unrealistic promises",
 ];
 
 const premiumValueBullets = [
@@ -568,12 +569,15 @@ function Home() {
       <Seo {...seoPages.home} />
       <section className="hero">
         <div className="hero-content">
-          <p className="eyebrow">UK-focused health and nutrition tools</p>
+          <p className="eyebrow">
+            Free UK health calculators and meal planning tools
+          </p>
           <h1>Health Metric Pro</h1>
           <p className="hero-copy">
-            Calculate BMI, protein, calories, and hydration targets, then move
-            from free tools into a structured 30-day premium plan built for
-            practical UK meal planning.
+            Get clear results for BMI, protein, calories, and hydration, then
+            start a practical free meal plan built around everyday UK food
+            choices. Upgrade only when you want the full 30-day premium
+            structure.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/thank-you-meal-plan">
