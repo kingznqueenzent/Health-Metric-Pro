@@ -133,24 +133,34 @@ const premiumValueBullets = [
 
 const premiumFaqs = [
   {
-    question: "How does the premium download work?",
+    question: "What do I get with the premium plan?",
     answer:
-      "After checkout, Stripe redirects you to the premium download page. The button opens the 30-day plan as a PDF so you can save it, print it, or keep it on your phone.",
+      "You get the full 30-day structured nutrition plan, UK grocery lists, daily meal guidance, and instant PDF access.",
   },
   {
-    question: "Can I use it on mobile?",
+    question: "Is this suitable for beginners?",
     answer:
-      "Yes. The plan is designed as a mobile-friendly PDF with clear headings, weekly lists, daily meals, prep notes, and short sections that are easy to scan.",
+      "Yes. The plan uses simple meals, clear daily structure, and realistic guidance for busy adults getting started.",
   },
   {
-    question: "Is access instant?",
+    question: "Can I access it on mobile?",
     answer:
-      "Yes. Access is available immediately after the Stripe checkout redirect completes. No account setup is required for the current delivery flow.",
+      "Yes. The PDF is mobile friendly, easy to scan, and can also be saved or printed.",
   },
   {
-    question: "Who is the plan for?",
+    question: "Is this UK-focused?",
     answer:
-      "It is for busy adults who want practical UK-focused meal structure, beginner friendly guidance, and realistic consistency without complicated recipes.",
+      "Yes. It is written for UK users with familiar supermarket ingredients and UK English throughout.",
+  },
+  {
+    question: "How do I receive the plan?",
+    answer:
+      "Checkout is handled securely by Stripe, then you are sent to the download page for instant PDF access.",
+  },
+  {
+    question: "Is this medical advice?",
+    answer:
+      "No. It is general wellness and nutrition guidance, not medical advice. Speak with a qualified professional for personal health needs.",
   },
 ];
 
