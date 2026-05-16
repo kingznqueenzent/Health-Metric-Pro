@@ -67,6 +67,36 @@ const seoPages = {
     path: "/thank-you-meal-plan",
     noindex: true,
   },
+  healthyEatingGuide: {
+    title: "Healthy Eating Guide UK | Health Metric Pro",
+    description:
+      "A beginner-friendly UK healthy eating guide with practical meal planning, balanced plates and links to free calculators.",
+    path: "/healthy-eating-guide",
+  },
+  highProteinMealGuide: {
+    title: "High Protein Meal Guide UK | Health Metric Pro",
+    description:
+      "Learn beginner-friendly high protein meal planning with UK supermarket foods, simple portions and free protein calculator support.",
+    path: "/high-protein-meal-guide",
+  },
+  weightLossMealPlanning: {
+    title: "Weight Loss Meal Planning UK | Health Metric Pro",
+    description:
+      "Plan realistic UK-friendly meals for weight management with balanced portions, simple routines and free health calculators.",
+    path: "/weight-loss-meal-planning",
+  },
+  mealPrepTips: {
+    title: "Meal Prep Tips UK | Health Metric Pro",
+    description:
+      "Beginner-friendly UK meal prep tips for planning, shopping and preparing simple meals without unrealistic promises.",
+    path: "/meal-prep-tips",
+  },
+  ukNutritionGuide: {
+    title: "UK Nutrition Guide | Health Metric Pro",
+    description:
+      "A practical UK nutrition guide for calories, protein, hydration and balanced meals with free calculator links.",
+    path: "/uk-nutrition-guide",
+  },
   privacy: {
     title: "Privacy Policy | Health Metric Pro",
     description:
@@ -164,6 +194,114 @@ const premiumFaqs = [
     question: "Is this medical advice?",
     answer:
       "No. It is general wellness and nutrition guidance, not medical advice. Speak with a qualified professional for personal health needs.",
+  },
+];
+
+const guidePages = [
+  {
+    seo: seoPages.healthyEatingGuide,
+    eyebrow: "Healthy eating guide",
+    title: "Healthy Eating Guide",
+    summary:
+      "A simple UK-focused guide for building balanced meals without complicated rules or unrealistic promises.",
+    sections: [
+      {
+        heading: "Start with a balanced plate",
+        body: "Most meals feel easier to plan when you include a protein source, a fibre-rich carbohydrate, vegetables or fruit, and a small amount of healthy fat. This structure works well with everyday UK supermarket foods.",
+      },
+      {
+        heading: "Keep meals realistic",
+        body: "Choose foods you can repeat, afford and prepare consistently. A good week of eating does not need perfect recipes; it needs practical breakfasts, lunches and dinners that fit your routine.",
+      },
+      {
+        heading: "Use calculators as planning tools",
+        body: "The BMI, TDEE, protein and water calculators can help you understand rough targets. Treat the results as helpful estimates rather than medical advice or strict rules.",
+      },
+    ],
+  },
+  {
+    seo: seoPages.highProteinMealGuide,
+    eyebrow: "Protein guide",
+    title: "High Protein Meal Guide",
+    summary:
+      "Beginner-friendly ideas for adding protein to meals using familiar UK ingredients.",
+    sections: [
+      {
+        heading: "Build protein into each meal",
+        body: "Useful options include eggs, Greek yoghurt, chicken, turkey, tuna, salmon, tofu, lentils, beans and cottage cheese. Spread protein across the day rather than relying on one large meal.",
+      },
+      {
+        heading: "Keep portions flexible",
+        body: "Your needs depend on body weight, activity, appetite and goals. Use the protein calculator for an estimate, then adjust meals so they feel manageable and sustainable.",
+      },
+      {
+        heading: "Pair protein with fibre",
+        body: "Protein works best as part of a balanced meal. Add oats, potatoes, rice, wholemeal wraps, vegetables, fruit or pulses to support fullness and overall nutrition.",
+      },
+    ],
+  },
+  {
+    seo: seoPages.weightLossMealPlanning,
+    eyebrow: "Weight management",
+    title: "Weight Loss Meal Planning",
+    summary:
+      "A realistic UK meal-planning approach for people who want structure without extreme dieting.",
+    sections: [
+      {
+        heading: "Focus on repeatable routines",
+        body: "Weight management is easier when meals are simple enough to repeat. Plan a few breakfasts, lunches and dinners you like, then rotate them through the week.",
+      },
+      {
+        heading: "Understand your rough energy needs",
+        body: "The TDEE calculator can estimate daily maintenance calories. Use it as a guide for planning, not as a guarantee of results or a replacement for professional advice.",
+      },
+      {
+        heading: "Avoid extreme promises",
+        body: "Sustainable progress usually comes from steady habits: balanced portions, regular protein, enough fibre, hydration and a plan you can keep using on busy days.",
+      },
+    ],
+  },
+  {
+    seo: seoPages.mealPrepTips,
+    eyebrow: "Meal prep tips",
+    title: "Meal Prep Tips",
+    summary:
+      "Practical meal prep ideas for busy UK adults who want less guesswork during the week.",
+    sections: [
+      {
+        heading: "Plan before shopping",
+        body: "Choose two or three main meals, one easy lunch option and a few snacks before you shop. This keeps the list focused and reduces last-minute decisions.",
+      },
+      {
+        heading: "Prep components, not everything",
+        body: "Cook proteins, chop vegetables, portion snacks or prepare sauces in advance. You can still mix meals fresh while saving time during the week.",
+      },
+      {
+        heading: "Make it mobile friendly",
+        body: "Packed lunches, yoghurt bowls, wraps, soups and rice boxes travel well. The free 7-day meal plan gives you a simple structure to start from.",
+      },
+    ],
+  },
+  {
+    seo: seoPages.ukNutritionGuide,
+    eyebrow: "UK nutrition guide",
+    title: "UK Nutrition Guide",
+    summary:
+      "A plain-English overview of calories, protein, hydration and balanced meals for everyday UK planning.",
+    sections: [
+      {
+        heading: "Calories are an estimate",
+        body: "Calorie needs vary by age, size, activity and lifestyle. The TDEE calculator gives a useful starting point, but real progress should be judged over time.",
+      },
+      {
+        heading: "Protein supports meal structure",
+        body: "Protein can help meals feel more satisfying. Use familiar foods such as eggs, yoghurt, fish, poultry, beans, lentils and tofu alongside vegetables and carbohydrates.",
+      },
+      {
+        heading: "Hydration matters too",
+        body: "Water needs change with body size, activity and warm conditions. Use the water intake calculator as a practical estimate, then adjust for your own day.",
+      },
+    ],
   },
 ];
 
@@ -444,6 +582,7 @@ function AppShell({ children }) {
           <NavLink to="/tdee-calculator">TDEE</NavLink>
           <NavLink to="/water-intake-calculator">Water</NavLink>
           <NavLink to="/7-day-meal-plan">Meal Plan</NavLink>
+          <NavLink to="/healthy-eating-guide">Guides</NavLink>
         </nav>
       </header>
       <main>{children}</main>
@@ -456,6 +595,7 @@ function AppShell({ children }) {
           <Link to="/privacy-policy">Privacy Policy</Link>
           <Link to="/terms">Terms</Link>
           <Link to="/disclaimer">Disclaimer</Link>
+          <Link to="/healthy-eating-guide">Guides</Link>
           <Link to="/contact">Contact</Link>
         </nav>
       </footer>
@@ -463,7 +603,7 @@ function AppShell({ children }) {
   );
 }
 
-function QuickLinks({ includeTools = false }) {
+function QuickLinks({ includeTools = false, includeGuides = false }) {
   return (
     <section className="quick-links" aria-label="Related pages">
       <Link to="/">Home</Link>
@@ -475,7 +615,33 @@ function QuickLinks({ includeTools = false }) {
           ))
         : null}
       <Link to="/7-day-meal-plan">Free Meal Plan</Link>
+      {includeGuides
+        ? guidePages.map((guide) => (
+            <Link key={guide.seo.path} to={guide.seo.path}>
+              {guide.title}
+            </Link>
+          ))
+        : null}
       <Link to="/premium-meal-plan-download">Premium Download</Link>
+    </section>
+  );
+}
+
+function GuideCards() {
+  return (
+    <section className="section" aria-labelledby="nutrition-guides-title">
+      <div className="section-heading">
+        <p className="eyebrow">Nutrition guides</p>
+        <h2 id="nutrition-guides-title">Beginner-friendly UK meal planning</h2>
+      </div>
+      <div className="guide-card-grid">
+        {guidePages.map((guide) => (
+          <Link className="guide-card" key={guide.seo.path} to={guide.seo.path}>
+            <span>{guide.title}</span>
+            <p>{guide.summary}</p>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
@@ -610,6 +776,8 @@ function Home() {
         </div>
       </section>
 
+      <GuideCards />
+
       <section className="cta-band">
         <div>
           <p className="eyebrow">Start your free meal plan</p>
@@ -707,7 +875,7 @@ function CalculatorLayout({ eyebrow, title, intro, children, aside, seo }) {
         <div className="calculator-panel">{children}</div>
         <aside className="insight-panel">{aside}</aside>
       </section>
-      <QuickLinks />
+      <QuickLinks includeGuides />
     </AppShell>
   );
 }
@@ -1188,7 +1356,7 @@ function MealPlan() {
         </a>
       </section>
       <PremiumFaq />
-      <QuickLinks includeTools />
+      <QuickLinks includeTools includeGuides />
     </AppShell>
   );
 }
@@ -1232,7 +1400,7 @@ function PremiumDownload() {
           </Link>
         </div>
       </section>
-      <QuickLinks includeTools />
+      <QuickLinks includeTools includeGuides />
     </AppShell>
   );
 }
@@ -1261,7 +1429,62 @@ function ThankYouMealPlan() {
           </Link>
         </div>
       </section>
-      <QuickLinks includeTools />
+      <QuickLinks includeTools includeGuides />
+    </AppShell>
+  );
+}
+
+function SeoGuidePage({ guide }) {
+  return (
+    <AppShell>
+      <Seo {...guide.seo} />
+      <section className="page-hero compact">
+        <p className="eyebrow">{guide.eyebrow}</p>
+        <h1>{guide.title}</h1>
+        <p>{guide.summary}</p>
+        <div className="hero-actions">
+          <Link className="button primary" to="/7-day-meal-plan">
+            Start Your Free Meal Plan
+          </Link>
+          <Link className="button secondary subtle" to="/tdee-calculator">
+            Try A Calculator
+          </Link>
+        </div>
+      </section>
+
+      <section className="guide-content" aria-label={`${guide.title} content`}>
+        <div className="guide-sections">
+          {guide.sections.map((section) => (
+            <article className="guide-section" key={section.heading}>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+            </article>
+          ))}
+        </div>
+        <aside className="guide-support" aria-labelledby="guide-tools-title">
+          <h2 id="guide-tools-title">Useful planning tools</h2>
+          <p>
+            Use these free tools to estimate your own starting points, then
+            build meals around your routine.
+          </p>
+          <div className="guide-link-list">
+            {tools.map((tool) => (
+              <Link key={tool.path} to={tool.path}>
+                {tool.title}
+              </Link>
+            ))}
+            <Link to="/7-day-meal-plan">Free 7-Day Meal Plan</Link>
+          </div>
+          <p className="small-note">
+            This guide is for general wellness education only. It is not
+            medical advice, diagnosis or treatment. Speak with a qualified
+            professional if you have a medical condition, are pregnant, or need
+            personalised nutrition advice.
+          </p>
+        </aside>
+      </section>
+
+      <QuickLinks includeTools includeGuides />
     </AppShell>
   );
 }
@@ -1276,7 +1499,7 @@ function LegalPage({ seo, eyebrow, title, children }) {
         <p className="small-note">Last updated: 8 May 2026</p>
         <div className="legal-content">{children}</div>
       </section>
-      <QuickLinks includeTools />
+      <QuickLinks includeTools includeGuides />
     </AppShell>
   );
 }
@@ -1459,6 +1682,13 @@ export default function App() {
           element={<PremiumDownload />}
         />
         <Route path="/thank-you-meal-plan" element={<ThankYouMealPlan />} />
+        {guidePages.map((guide) => (
+          <Route
+            key={guide.seo.path}
+            path={guide.seo.path}
+            element={<SeoGuidePage guide={guide} />}
+          />
+        ))}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/disclaimer" element={<Disclaimer />} />

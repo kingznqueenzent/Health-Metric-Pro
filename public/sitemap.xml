@@ -31,6 +31,31 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.healthmetricpro.co.uk/healthy-eating-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.healthmetricpro.co.uk/high-protein-meal-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.healthmetricpro.co.uk/weight-loss-meal-planning</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.healthmetricpro.co.uk/meal-prep-tips</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.healthmetricpro.co.uk/uk-nutrition-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.healthmetricpro.co.uk/premium-meal-plan-download</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
